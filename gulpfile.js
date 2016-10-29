@@ -6,9 +6,11 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var vinylSourceStream = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
+var changed = require('gulp-changed');
 
 gulp.task('sass', function() {
     return gulp.src('src/scss/main.scss')
+        .pipe(changed('dist/css/'))
         .pipe(sourcemaps.init())
         .pipe(sass({
             outputStyle: 'expanded'
@@ -19,6 +21,7 @@ gulp.task('sass', function() {
 
 gulp.task('lint', function(){
   return gulp.src('src/js/app.js')
+  .pipe(changed('dist/js/'))
   .pipe(jshint({esversion: 6}))
   .pipe(jshint.reporter('default'));
 });
@@ -35,6 +38,7 @@ gulp.task('browserify', function() {
         }));
 
     return sources.bundle()
+        .pipe(changed('dist/js/'))
         .pipe(vinylSourceStream('app.js'))
         .pipe(vinylBuffer())
         .pipe(gulp.dest('dist/js/'));

@@ -1,7 +1,7 @@
 {
-  "name": "batmangame",
+  "name": "froggergame",
   "version": "1.0.0",
-  "description": "JS/CSS Batman Game",
+  "description": "Frogger JS/CSS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,6 +13,7 @@
     "babelify": "^7.3.0",
     "browserify": "^13.1.1",
     "gulp": "^3.9.1",
+    "gulp-changed": "^1.3.2",
     "gulp-jshint": "^2.0.2",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",

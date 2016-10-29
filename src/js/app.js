@@ -1,3 +1,6 @@
+import Game from './classes/Game.js';
+
 document.addEventListener('DOMContentLoaded', () =>{
-  console.log('working');      
+  let game = new Game();
+  game.startGame();
 });
