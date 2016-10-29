@@ -24,10 +24,10 @@ export default class Board{
   }
 
   startBoard(){
-    for(let i = 1, speed = 1300; i <= 5; i++){
+    for(let i = 1, speed = 1100; i <= 5; i++){
       BoardService.startCarLine(this, this.cars, i, speed);
-      speed = speed + 500;
-      i > 4 ? speed = 1300 : false;
+      speed = speed - 100;
+      i > 4 ? speed = 1100 : false;
     }
   }
 

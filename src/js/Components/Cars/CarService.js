@@ -12,16 +12,16 @@ const CarService = {
                 line++;
                 switch (line) {
                     case 2:
-                        posX = 7;
+                        posX = 6;
                         break
                     case 3:
-                        posX = 0;
+                        posX = 2;
                         break;
                     case 4:
-                        posX = 7;
+                        posX = 4;
                         break;
                     case 5:
-                        posX = 0;
+                        posX = 1;
                         break;
                     default:
                         break;
