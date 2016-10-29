@@ -1,17 +1,39 @@
 import MovingObject from './MovingObject.js';
-import Board from './Board.js';
 
 export default class Frogger extends MovingObject{
   constructor(posX, posY, direction, lives){
-    super(posX, posY, direction);
+    super();
     this.posX = 7;
     this.posY = 12;
     this.direction = 'up';
     this.lives = 3;
   }
 
-  setFroggerPosition(board, frogger){
-    board[this.getPosition(frogger.posX, frogger.posY)].className = "frogger";
+  setFroggerPosition(board){
+    board[this.getPosition(this.posX, this.posY)].className = "frogger";
+  }
+
+  move(event){
+    switch(event.which){
+      case 37:
+        this.direction = 'left';
+        this.posX--;
+        break;
+      case 38:
+        this.direction = 'up';
+        this.posY--;
+        break;
+      case 39:
+        this.direction = 'right';
+        this.posX++;
+        break;
+      case 40:
+        this.direction = 'down';
+        this.posY++;
+        break;
+      default:
+        break;
+    };
   }
 
 }

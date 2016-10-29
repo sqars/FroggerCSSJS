@@ -9,7 +9,7 @@ export default class Game{
     let board = document.getElementById('board');
     generateDivs(board);
     this.board.setBoard();
-    document.addEventListener('keydown', () => this.board.move(event));
+    document.addEventListener('keydown', () => this.board.moveFrogger(event));
   }
 
 }
