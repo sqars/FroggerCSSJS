@@ -1,4 +1,4 @@
-import Board from './Board.js';
+import Board from './Board/Board.js';
 
 export default class Game{
   constructor(){
@@ -9,6 +9,7 @@ export default class Game{
     let board = document.getElementById('board');
     generateDivs(board);
     this.board.setBoard();
+    this.board.startBoard();
     document.addEventListener('keydown', () => this.board.moveFrogger(event));
   }
 

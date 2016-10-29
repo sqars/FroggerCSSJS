@@ -1,4 +1,4 @@
-import Game from './classes/Game.js';
+import Game from './Components/Game.js'; 
 
 document.addEventListener('DOMContentLoaded', () =>{
   let game = new Game();
