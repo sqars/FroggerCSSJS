@@ -5,7 +5,7 @@ export default class MovingObject{
     this.direction = direction;
   }
 
-  getPosition(posX, posY){
-      return posX + posY * 14;
+  getPosition(){
+      return this.posX + this.posY * 14;
   }
 }

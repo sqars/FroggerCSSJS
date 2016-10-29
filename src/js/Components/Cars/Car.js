@@ -14,7 +14,7 @@ export default class Car extends MovingObject{
   setCarPosition(board){
     this.posX > 13 ? this.posX = 0 : false;
     this.posX < 0 ? this.posX = 13 : false;
-    board[this.getPosition(this.posX, this.posY)].className = "car";
+    board[this.getPosition()].className = "car";
   }
 
   move(){
