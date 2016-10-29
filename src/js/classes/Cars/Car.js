@@ -1,4 +1,4 @@
-import MovingObject from './MovingObject.js';
+import MovingObject from '../MovingObject.js';
 
 export default class Car extends MovingObject{
 

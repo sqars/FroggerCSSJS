@@ -1,11 +1,11 @@
 import Frogger from './Frogger.js';
-import Car from './Car.js';
+import CarService from './cars/CarService.js';
 
 export default class Board{
   constructor(){
     this.board = null;
     this.frogger = new Frogger();
-    this.cars = createCars();
+    this.cars = CarService.createCars();
   }
 
   setBoard(){
@@ -24,7 +24,7 @@ export default class Board{
 
   moveCar(){
 
-  }
+  } 
 
 }
 
@@ -33,32 +33,3 @@ function clearBoard(board){
     div.className = "";
   })
 };
-
-function createCars(){
-  let cars = [];
-  for(let i = 1, line = 1, posX = 0; i <= 25; i++){
-    let car = new Car(posX, line);
-    posX = posX + 2;
-    if(i % 5 == 0){
-      line++;
-      switch(line){
-        case 2:
-          posX = 5;
-          break
-        case 3:
-          posX = 0;
-          break;
-        case 4:
-          posX = 5;
-          break;
-        case 5:
-          posX = 0;
-          break;
-        default:
-          break;
-      }
-    };
-    cars.push(car);
-  }
-  return cars;
-}
