@@ -21,7 +21,6 @@ gulp.task('sass', function() {
 
 gulp.task('lint', function(){
   return gulp.src('src/js/app.js')
-  .pipe(changed('dist/js/'))
   .pipe(jshint({esversion: 6}))
   .pipe(jshint.reporter('default'));
 });
@@ -38,7 +37,6 @@ gulp.task('browserify', function() {
         }));
 
     return sources.bundle()
-        .pipe(changed('dist/js/'))
         .pipe(vinylSourceStream('app.js'))
         .pipe(vinylBuffer())
         .pipe(gulp.dest('dist/js/'));

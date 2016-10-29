@@ -1,8 +1,20 @@
-export default class Frogger{
+import MovingObject from './MovingObject.js';
+
+export default class Frogger extends MovingObject{
   constructor(posX, posY, direction, lives){
-    this.posX = -13;
-    this.posY = 7;
+    super(posX, posY, direction);
+    this.posX = 7;
+    this.posY = 12;
     this.direction = 'up';
     this.lives = 3;
   }
+
+  setFroggerPosition(board, frogger){
+    board[this.getPosition(frogger.posX, frogger.posY)].className = "frogger";
+  }
+
+  move(){
+    console.log('moved');
+  }
+
 }
