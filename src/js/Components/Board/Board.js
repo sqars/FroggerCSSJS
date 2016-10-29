@@ -24,15 +24,11 @@ export default class Board{
   }
 
   startBoard(){
-      return window.setInterval(() =>{
-        let firstLineCars = this.cars.filter((car) =>{
-          return car.line == 1;
-        });
-        this.cars.forEach((car) =>{
-          car.move();
-        });
-        this.setBoard();
-      }, 1000); // TODO: add speed functionality
+    for(let i = 1, speed = 1300; i <= 5; i++){
+      BoardService.startCarLine(this, this.cars, i, speed);
+      speed = speed + 500;
+      i > 4 ? speed = 1300 : false;
+    }
   }
 
 }
