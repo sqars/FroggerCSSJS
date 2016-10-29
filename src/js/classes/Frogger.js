@@ -1,4 +1,5 @@
 import MovingObject from './MovingObject.js';
+import Board from './Board.js';
 
 export default class Frogger extends MovingObject{
   constructor(posX, posY, direction, lives){
@@ -11,10 +12,6 @@ export default class Frogger extends MovingObject{
 
   setFroggerPosition(board, frogger){
     board[this.getPosition(frogger.posX, frogger.posY)].className = "frogger";
-  }
-
-  move(){
-    console.log('moved');
   }
 
 }

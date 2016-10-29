@@ -6,8 +6,17 @@ export default class Game{
   }
 
   startGame(){
-    console.log('game started');
+    let board = document.getElementById('board');
+    generateDivs(board);
     this.board.setBoard();
+    document.addEventListener('keydown', () => this.board.move(event));
   }
 
 }
+
+function generateDivs(board){
+  for(let i = 0; i < 182; i++){
+    let div = document.createElement('div');
+    board.appendChild(div);
+  }
+};
