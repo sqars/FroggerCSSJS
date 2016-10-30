@@ -1,12 +1,14 @@
 import Frogger from '../Frogger.js';
 import CarService from '../cars/CarService.js';
 import BoardService from './BoardService.js';
+import EventEmitter from '../../EventEmitter.js';
 
 export default class Board {
     constructor() {
         this.board = null;
         this.frogger = new Frogger();
         this.cars = CarService.createCars();
+        this.emitter = new EventEmitter();
     };
 
     setBoard() {
