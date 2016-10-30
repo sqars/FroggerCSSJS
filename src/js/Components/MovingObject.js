@@ -8,4 +8,17 @@ export default class MovingObject{
   getPosition(){
       return this.posX + this.posY * 14;
   }
+
+  move(){
+    switch(this.direction){
+          case 'left':
+            this.posX--;
+            break;
+          case 'right':
+            this.posX++;
+            break;
+          default:
+            break;
+        }
+  }
 }

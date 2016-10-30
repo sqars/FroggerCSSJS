@@ -7,12 +7,17 @@ var babelify = require('babelify');
 var vinylSourceStream = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
 var changed = require('gulp-changed');
+var uglify = require('gulp-uglify');
+var pump = require('pump');
+var cleanCSS = require('gulp-clean-css');
+var plumber = require('gulp-plumber');
 
 gulp.task('sass', function() {
     return gulp.src('src/scss/main.scss')
+        .pipe(plumber())
         .pipe(changed('dist/css/'))
         .pipe(sourcemaps.init())
-        .pipe(sass({
+        .pipe(sass.sync({
             outputStyle: 'expanded'
         }))
         .pipe(sourcemaps.write())
@@ -42,8 +47,25 @@ gulp.task('browserify', function() {
         .pipe(gulp.dest('dist/js/'));
 });
 
+gulp.task('buildJs', function () {
+  pump([
+        gulp.src('dist/js/app.js'),
+        uglify(),
+        gulp.dest('dist/js')
+    ]
+  );
+});
+
+gulp.task('buildCss', function () {
+  return gulp.src('dist/css/main.css')
+     .pipe(cleanCSS({compatibility: 'ie8'}))
+     .pipe(gulp.dest('dist/css/'));
+});
+
 gulp.task('default', function() {
     gulp.watch('src/js/**/*.js', ['browserify']);
     gulp.watch('src/js/**/*.js', ['lint']);
     gulp.watch('src/scss/**/*.scss', ['sass']);
 });
+
+gulp.task('build', ['buildJs', 'buildCss']);

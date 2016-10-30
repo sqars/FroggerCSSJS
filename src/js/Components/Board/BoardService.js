@@ -11,12 +11,16 @@ const BoardService = {
       let filteredLine = cars.filter((car) =>{
         return car.line == line;
       });
+      let counter = 0;
       filteredLine.forEach((car) =>{
-        car.line == 5 ? console.log(car): false;
-        car.move();
+          car.move();
       });
       Board.setBoard();
     }, speed); // TODO: add speed functionality
+  },
+
+  startTurtleLine: (Board, turtles, line, speed = 1000) =>{
+
   }
 };
 

@@ -43,7 +43,6 @@ const CarService = {
                 };
             }
         }
-        console.log(cars);
         return cars;
     },
 

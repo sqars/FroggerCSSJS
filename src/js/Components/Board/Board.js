@@ -1,14 +1,14 @@
 import Frogger from '../Frogger.js';
-import CarService from '../cars/CarService.js';
+import CarService from '../Cars/CarService.js';
 import BoardService from './BoardService.js';
-import EventEmitter from '../../EventEmitter.js';
+import TurtleService from '../Turtles/TurtleService.js';
 
 export default class Board {
     constructor() {
         this.board = null;
         this.frogger = new Frogger();
         this.cars = CarService.createCars();
-        this.emitter = new EventEmitter();
+        this.turtles = TurtleService.createTurtles();
     };
 
     setBoard() {
@@ -17,6 +17,9 @@ export default class Board {
         this.frogger.setFroggerPosition(this.board);
         this.cars.forEach((car) => {
             car.setCarPosition(this.board);
+        });
+        this.turtles.forEach((turtle) =>{
+          turtle.setTurtlePosition(this.board);
         });
     };
 
@@ -38,7 +41,6 @@ export default class Board {
         for (let i = 1, speed = 1100; i <= 5; i++) {
             BoardService.startCarLine(this, this.cars, i, speed);
             speed = speed - 100;
-            i > 4 ? speed = 1100 : false;
         }
     }
 
