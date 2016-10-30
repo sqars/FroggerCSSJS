@@ -12,6 +12,7 @@ const BoardService = {
         return car.line == line;
       });
       filteredLine.forEach((car) =>{
+        car.line == 5 ? console.log(car): false;
         car.move();
       });
       Board.setBoard();
