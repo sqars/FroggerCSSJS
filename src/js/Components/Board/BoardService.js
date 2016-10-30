@@ -6,14 +6,13 @@ const BoardService = {
     })
   },
 
-  startCarLine: (Board, cars, line, speed = 1000) =>{
+  startMovingLine: (Board, objects, line, speed = 1000) =>{
     return window.setInterval(() =>{
-      let filteredLine = cars.filter((car) =>{
-        return car.line == line;
+      let filteredLine = objects.filter((obj) =>{
+        return obj.line == line;
       });
-      let counter = 0;
-      filteredLine.forEach((car) =>{
-          car.move();
+      filteredLine.forEach((obj) =>{
+          obj.move();
       });
       Board.setBoard();
     }, speed); // TODO: add speed functionality

@@ -6,7 +6,6 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var vinylSourceStream = require('vinyl-source-stream');
 var vinylBuffer = require('vinyl-buffer');
-var changed = require('gulp-changed');
 var uglify = require('gulp-uglify');
 var pump = require('pump');
 var cleanCSS = require('gulp-clean-css');
@@ -15,7 +14,6 @@ var plumber = require('gulp-plumber');
 gulp.task('sass', function() {
     return gulp.src('src/scss/main.scss')
         .pipe(plumber())
-        .pipe(changed('dist/css/'))
         .pipe(sourcemaps.init())
         .pipe(sass.sync({
             outputStyle: 'expanded'

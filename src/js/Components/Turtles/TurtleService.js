@@ -4,7 +4,7 @@ const TurtleService = {
 
   createTurtles: () =>{
     let turtles = [];
-    for (let i = 1, line = 1, posX = 0; i <= 7; i++) {
+    for (let i = 1, line = 1, posX = 3; i <= 7; i++) {
       let turtle;
       if(line == 1){
         let size2Turtle = [];
@@ -18,7 +18,6 @@ const TurtleService = {
             ...turtles,
             ...size2Turtle
         ];
-        console.log(turtles);
       } else{
         let size3Turtle = [];
         for (let j = 0, newPosX = posX; j < 3; j++) {

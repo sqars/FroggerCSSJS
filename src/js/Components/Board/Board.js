@@ -39,8 +39,12 @@ export default class Board {
 
     startBoard() {
         for (let i = 1, speed = 1100; i <= 5; i++) {
-            BoardService.startCarLine(this, this.cars, i, speed);
+            BoardService.startMovingLine(this, this.cars, i, speed);
             speed = speed - 100;
+        }
+        for(let i = 1, speed = 900; i <=2; i++){
+          BoardService.startMovingLine(this, this.turtles, i, speed);
+          speed = 700;
         }
     }
 
