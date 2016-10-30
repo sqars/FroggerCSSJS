@@ -2,6 +2,7 @@ import Frogger from '../Frogger.js';
 import CarService from '../Cars/CarService.js';
 import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
+import WaterService from '../Water/WaterService.js';
 
 export default class Board {
     constructor() {
@@ -9,12 +10,16 @@ export default class Board {
         this.frogger = new Frogger();
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
+        this.water = WaterService.createWater();
     };
 
     setBoard() {
         this.board = document.querySelectorAll('#board div');
         BoardService.clearBoard(this.board);
         this.frogger.setFroggerPosition(this.board);
+        this.water.forEach((waterObj) =>{
+          waterObj.setWaterPosition(this.board);
+        })
         this.cars.forEach((car) => {
             car.setCarPosition(this.board);
         });
