@@ -6,6 +6,13 @@ const BoardService = {
     })
   },
 
+  checkCollision(frogger, elements){
+    let froggerPos = frogger.getPosition();
+    let result = false;
+    elements.forEach(elem => elem.getPosition() === froggerPos ? result = froggerPos : false);
+    return result;
+  },
+
   startMovingLine: (Board, objects, line, speed = 1000) =>{
     return window.setInterval(() =>{
       let filteredLine = objects.filter((obj) =>{

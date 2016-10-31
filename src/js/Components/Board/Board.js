@@ -16,30 +16,39 @@ export default class Board {
     setBoard() {
         this.board = document.querySelectorAll('#board div');
         BoardService.clearBoard(this.board);
+        this.water.forEach((waterObj) => {
+            waterObj.setWaterPosition(this.board);
+        });
+        this.turtles.forEach((turtle) => {
+            turtle.setTurtlePosition(this.board);
+        });
         this.frogger.setFroggerPosition(this.board);
-        this.water.forEach((waterObj) =>{
-          waterObj.setWaterPosition(this.board);
-        })
         this.cars.forEach((car) => {
             car.setCarPosition(this.board);
         });
-        this.turtles.forEach((turtle) =>{
-          turtle.setTurtlePosition(this.board);
-        });
+        this.checkCollision();
     };
+
+    sailFrogger(){
+      let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+      if(turtleCollision !== false){
+        this.frogger.posX--;
+      }
+    }
 
     moveFrogger(event) {
         this.frogger.move(event);
         this.setBoard();
-        this.checkCollision();
     };
 
     checkCollision() {
-        this.cars.forEach((car) => {
-          if(car.getPosition() === this.frogger.getPosition()){
-            console.log('game over');
-          };
-        });
+      let collision = false;
+      let carCollision = BoardService.checkCollision(this.frogger, this.cars);
+      let waterCollision = BoardService.checkCollision(this.frogger, this.water);
+      let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+      carCollision !== false || waterCollision !== false ? collision = true : false; // TODO: check this condition
+      turtleCollision ? collision = turtleCollision : false;
+      return collision;
     };
 
     startBoard() {
@@ -47,9 +56,9 @@ export default class Board {
             BoardService.startMovingLine(this, this.cars, i, speed);
             speed = speed - 100;
         }
-        for(let i = 1, speed = 900; i <=2; i++){
-          BoardService.startMovingLine(this, this.turtles, i, speed);
-          speed = 700;
+        for (let i = 1, speed = 900; i <= 2; i++) {
+            BoardService.startMovingLine(this, this.turtles, i, speed);
+            speed = 700;
         }
     }
 
