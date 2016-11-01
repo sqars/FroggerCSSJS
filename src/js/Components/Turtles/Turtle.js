@@ -8,7 +8,7 @@ export default class Turtle extends MovingObject{
     this.posY = TurtleService.generateYPos(line);
     this.direction = 'left';
   }
-  
+
   setTurtlePosition(board){
     this.posX < 0 ? this.posX = 13 : false;
     board[this.getPosition()].className = "turtle";

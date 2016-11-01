@@ -7,11 +7,11 @@ export default class Frogger extends MovingObject{
     this.posY = 12;
     this.direction = 'up';
     this.lives = 3;
-  }
+  };
 
   setFroggerPosition(board){
     board[this.getPosition()].className = "frogger";
-  }
+  };
 
   move(event){
     switch(event.which){

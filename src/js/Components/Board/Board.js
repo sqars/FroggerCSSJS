@@ -4,6 +4,9 @@ import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
 import WaterService from '../Water/WaterService.js';
 
+import EventEmitter from '../../EventEmitter.js';
+import { watch, unwatch } from 'watch-object';
+
 export default class Board {
     constructor() {
         this.board = null;
@@ -11,6 +14,7 @@ export default class Board {
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.water = WaterService.createWater();
+        this.emitter = new EventEmitter();
     };
 
     setBoard() {
@@ -29,15 +33,12 @@ export default class Board {
         this.checkCollision();
     };
 
-    sailFrogger(){
-      let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
-      if(turtleCollision !== false){
-        this.frogger.posX--;
-      }
-    }
-
     moveFrogger(event) {
         this.frogger.move(event);
+        let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+        if(turtleCollision){
+          this.emitter.emit('sailOnTurtle', turtleCollision);
+        }
         this.setBoard();
     };
 
@@ -47,19 +48,35 @@ export default class Board {
       let waterCollision = BoardService.checkCollision(this.frogger, this.water);
       let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
       carCollision !== false || waterCollision !== false ? collision = true : false; // TODO: check this condition
-      turtleCollision ? collision = turtleCollision : false;
+      turtleCollision ? collision = false : false;
       return collision;
     };
 
+    startMovingLine(objects, line, speed = 1000){
+      return window.setInterval(() =>{
+        let filteredLine = objects.filter(obj => obj.line == line);
+        filteredLine.forEach(obj => obj.move());
+        this.setBoard();
+      }, speed); // TODO: add speed functionality
+    };
+
     startBoard() {
+        this.emitter.subscribe('sailOnTurtle', (position) =>{
+          let sailTurtle = this.turtles.filter((turtle) =>{
+            return turtle.getPosition() === position;
+          });
+          watch(sailTurtle[0], 'posX', ()=>{
+            this.frogger.posX = sailTurtle[0].posX;
+          });
+        });
         for (let i = 1, speed = 1100; i <= 5; i++) {
-            BoardService.startMovingLine(this, this.cars, i, speed);
+            this.startMovingLine(this.cars, i, speed);
             speed = speed - 100;
         }
         for (let i = 1, speed = 900; i <= 2; i++) {
-            BoardService.startMovingLine(this, this.turtles, i, speed);
+            this.startMovingLine(this.turtles, i, speed);
             speed = 700;
         }
-    }
+    };
 
 }
