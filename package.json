@@ -26,6 +26,5 @@
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
-    "watch-object": "^1.1.2"
   }
 }

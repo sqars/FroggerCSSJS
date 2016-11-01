@@ -4,9 +4,6 @@ import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
 import WaterService from '../Water/WaterService.js';
 
-import EventEmitter from '../../EventEmitter.js';
-import { watch, unwatch } from 'watch-object';
-
 export default class Board {
     constructor() {
         this.board = null;
@@ -14,7 +11,7 @@ export default class Board {
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.water = WaterService.createWater();
-        this.emitter = new EventEmitter();
+        this.sailTurtle = null;
     };
 
     setBoard() {
@@ -23,6 +20,7 @@ export default class Board {
         this.water.forEach((waterObj) => {
             waterObj.setWaterPosition(this.board);
         });
+        this.sailTurtle ? this.sailTurtle.sailFrogger(this.frogger) : false;
         this.turtles.forEach((turtle) => {
             turtle.setTurtlePosition(this.board);
         });
@@ -30,45 +28,40 @@ export default class Board {
         this.cars.forEach((car) => {
             car.setCarPosition(this.board);
         });
-        this.checkCollision();
+        // this.checkCollision();
     };
 
     moveFrogger(event) {
         this.frogger.move(event);
         let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
-        if(turtleCollision){
-          this.emitter.emit('sailOnTurtle', turtleCollision);
-        }
+        if (turtleCollision) {
+            let sailTurtle = this.turtles.filter(turtle => turtle.getPosition() === turtleCollision);
+            this.sailTurtle = sailTurtle[0];
+        } else{
+            this.sailTurtle = null;
+        };
         this.setBoard();
     };
 
     checkCollision() {
-      let collision = false;
-      let carCollision = BoardService.checkCollision(this.frogger, this.cars);
-      let waterCollision = BoardService.checkCollision(this.frogger, this.water);
-      let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
-      carCollision !== false || waterCollision !== false ? collision = true : false; // TODO: check this condition
-      turtleCollision ? collision = false : false;
-      return collision;
+        let collision = false;
+        let carCollision = BoardService.checkCollision(this.frogger, this.cars);
+        let waterCollision = BoardService.checkCollision(this.frogger, this.water);
+        let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+        carCollision !== false || waterCollision !== false ? collision = true : false; // TODO: check this condition
+        turtleCollision ? collision = false : false;
+        return collision;
     };
 
-    startMovingLine(objects, line, speed = 1000){
-      return window.setInterval(() =>{
-        let filteredLine = objects.filter(obj => obj.line == line);
-        filteredLine.forEach(obj => obj.move());
-        this.setBoard();
-      }, speed); // TODO: add speed functionality
+    startMovingLine(objects, line, speed = 1000) {
+        return window.setInterval(() => {
+            let filteredLine = objects.filter(obj => obj.line == line);
+            filteredLine.forEach(obj => obj.move());
+            this.setBoard();
+        }, speed); // TODO: add speed functionality
     };
 
     startBoard() {
-        this.emitter.subscribe('sailOnTurtle', (position) =>{
-          let sailTurtle = this.turtles.filter((turtle) =>{
-            return turtle.getPosition() === position;
-          });
-          watch(sailTurtle[0], 'posX', ()=>{
-            this.frogger.posX = sailTurtle[0].posX;
-          });
-        });
         for (let i = 1, speed = 1100; i <= 5; i++) {
             this.startMovingLine(this.cars, i, speed);
             speed = speed - 100;
