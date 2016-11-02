@@ -21,4 +21,8 @@ export default class MovingObject{
             break;
         }
   }
+
+  sailFrogger(frogger){
+    frogger.posX = this.posX;
+  }
 }

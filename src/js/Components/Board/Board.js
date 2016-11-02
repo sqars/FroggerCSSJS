@@ -3,6 +3,7 @@ import CarService from '../Cars/CarService.js';
 import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
 import WaterService from '../Water/WaterService.js';
+import WoodService from '../Wood/WoodService.js';
 
 export default class Board {
     constructor() {
@@ -11,34 +12,34 @@ export default class Board {
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.water = WaterService.createWater();
-        this.sailTurtle = null;
+        this.wood = WoodService.createWood();
+        this.sailElement = null;
     };
 
     setBoard() {
         this.board = document.querySelectorAll('#board div');
         BoardService.clearBoard(this.board);
-        this.water.forEach((waterObj) => {
-            waterObj.setWaterPosition(this.board);
-        });
-        this.sailTurtle ? this.sailTurtle.sailFrogger(this.frogger) : false;
-        this.turtles.forEach((turtle) => {
-            turtle.setTurtlePosition(this.board);
-        });
+        this.water.forEach( waterObj => waterObj.setWaterPosition(this.board));
+        this.sailElement ? this.sailElement.sailFrogger(this.frogger) : false;
+        this.turtles.forEach( turtle => turtle.setTurtlePosition(this.board));
+        this.wood.forEach( wood => wood.setWoodPosition(this.board));
         this.frogger.setFroggerPosition(this.board);
-        this.cars.forEach((car) => {
-            car.setCarPosition(this.board);
-        });
+        this.cars.forEach( car => car.setCarPosition(this.board));
         // this.checkCollision();
     };
 
     moveFrogger(event) {
         this.frogger.move(event);
         let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+        let woodCollision = BoardService.checkCollision(this.frogger, this.wood);
         if (turtleCollision) {
             let sailTurtle = this.turtles.filter(turtle => turtle.getPosition() === turtleCollision);
-            this.sailTurtle = sailTurtle[0];
+            this.sailElement = sailTurtle[0];
+        }else if(woodCollision){
+            let sailWood = this.wood.filter(wood => wood.getPosition() === woodCollision);
+            this.sailElement = sailWood[0];
         } else{
-            this.sailTurtle = null;
+            this.sailElement = null;
         };
         this.setBoard();
     };
@@ -48,8 +49,10 @@ export default class Board {
         let carCollision = BoardService.checkCollision(this.frogger, this.cars);
         let waterCollision = BoardService.checkCollision(this.frogger, this.water);
         let turtleCollision = BoardService.checkCollision(this.frogger, this.turtles);
+        let woodCollision = BoardService.checkCollision(this.frogger, this.wood);
         carCollision !== false || waterCollision !== false ? collision = true : false; // TODO: check this condition
         turtleCollision ? collision = false : false;
+        woodCollision ? collision = false : false;
         return collision;
     };
 
@@ -69,6 +72,10 @@ export default class Board {
         for (let i = 1, speed = 900; i <= 2; i++) {
             this.startMovingLine(this.turtles, i, speed);
             speed = 700;
+        }
+        for (let i = 1, speed = 900; i <= 3; i++) {
+            this.startMovingLine(this.wood, i, speed);
+            speed = speed - 200;
         }
     };
 
