@@ -7,8 +7,9 @@ import WoodService from '../Wood/WoodService.js';
 
 export default class Board {
     constructor() {
-        this.board = null;
-        this.frogger = new Frogger();
+        this.board = document.getElementById('canvas');
+        this.context = this.board.getContext("2d");
+        this.frogger = new Frogger(this.board);
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.water = WaterService.createWater();
@@ -17,14 +18,17 @@ export default class Board {
     };
 
     setBoard() {
-        this.board = document.querySelectorAll('#board div');
-        BoardService.clearBoard(this.board);
-        this.water.forEach(waterObj => waterObj.setWaterPosition(this.board));
-        this.sailElement ? this.sailElement.sailFrogger(this.frogger) : false;
-        this.turtles.forEach(turtle => turtle.setTurtlePosition(this.board));
-        this.wood.forEach(wood => wood.setWoodPosition(this.board));
-        this.frogger.setFroggerPosition(this.board);
-        this.cars.forEach(car => car.setCarPosition(this.board));
+        this.context.clearRect(0, 0, this.board.width, this.board.height);
+        this.frogger.drawFrogger(this.context);
+        requestAnimationFrame(this.setBoard.bind(this));
+        // this.board = document.querySelectorAll('#board div');
+        // BoardService.clearBoard(this.board);
+        // this.water.forEach(waterObj => waterObj.setWaterPosition(this.board));
+        // this.sailElement ? this.sailElement.sailFrogger(this.frogger) : false;
+        // this.turtles.forEach(turtle => turtle.setTurtlePosition(this.board));
+        // this.wood.forEach(wood => wood.setWoodPosition(this.board));
+        // this.frogger.setFroggerPosition(this.board);
+        // this.cars.forEach(car => car.setCarPosition(this.board));
         // this.checkCollision();
     };
 
@@ -79,9 +83,9 @@ export default class Board {
         };
         let divingTurtles = this.turtles.filter(turtle => turtle.diving);
         window.setInterval(() => {
-          divingTurtles.forEach((turtle) =>{
-            turtle.dived = !turtle.dived;
-          });
+            divingTurtles.forEach((turtle) => {
+                turtle.dived = !turtle.dived;
+            });
         }, 1000);
     };
 
