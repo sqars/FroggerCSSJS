@@ -14,7 +14,7 @@ export default class Frogger extends MovingObject {
 
     drawFrogger(ctx) {
         ctx.beginPath();
-        ctx.rect(this.posX, this.posY, 50, 50);
+        ctx.rect(this.posX, this.posY, this.height, this.width);
         ctx.fillStyle = "green";
         ctx.fill();
         ctx.closePath();

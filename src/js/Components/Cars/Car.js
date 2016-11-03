@@ -3,17 +3,22 @@ import CarService from './CarService';
 
 export default class Car extends MovingObject{
 
-  constructor(posX, line){
+  constructor(posX, line, speed){
     super(posX);
     this.line = line;
+    this.speed = speed;
+    this.height = 50;
+    this.width = CarService.generateWidth(line);
     this.posY = CarService.generateYPos(line);
     this.direction = CarService.generateDirection(line);
   }
 
-  setCarPosition(board){
-    this.posX > 13 ? this.posX = 0 : false;
-    this.posX < 0 ? this.posX = 13 : false;
-    board[this.getPosition()].className = "car";
+  drawCar(ctx) {
+      ctx.beginPath();
+      ctx.rect(this.posX, this.posY, this.height, this.width);
+      ctx.fillStyle = "red";
+      ctx.fill();
+      ctx.closePath();
   }
 
 }
