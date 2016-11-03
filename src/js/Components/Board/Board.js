@@ -19,12 +19,12 @@ export default class Board {
     setBoard() {
         this.board = document.querySelectorAll('#board div');
         BoardService.clearBoard(this.board);
-        this.water.forEach( waterObj => waterObj.setWaterPosition(this.board));
+        this.water.forEach(waterObj => waterObj.setWaterPosition(this.board));
         this.sailElement ? this.sailElement.sailFrogger(this.frogger) : false;
-        this.turtles.forEach( turtle => turtle.setTurtlePosition(this.board));
-        this.wood.forEach( wood => wood.setWoodPosition(this.board));
+        this.turtles.forEach(turtle => turtle.setTurtlePosition(this.board));
+        this.wood.forEach(wood => wood.setWoodPosition(this.board));
         this.frogger.setFroggerPosition(this.board);
-        this.cars.forEach( car => car.setCarPosition(this.board));
+        this.cars.forEach(car => car.setCarPosition(this.board));
         // this.checkCollision();
     };
 
@@ -35,10 +35,10 @@ export default class Board {
         if (turtleCollision) {
             let sailTurtle = this.turtles.filter(turtle => turtle.getPosition() === turtleCollision);
             this.sailElement = sailTurtle[0];
-        }else if(woodCollision){
+        } else if (woodCollision) {
             let sailWood = this.wood.filter(wood => wood.getPosition() === woodCollision);
             this.sailElement = sailWood[0];
-        } else{
+        } else {
             this.sailElement = null;
         };
         this.setBoard();
@@ -68,15 +68,21 @@ export default class Board {
         for (let i = 1, speed = 1100; i <= 5; i++) {
             this.startMovingLine(this.cars, i, speed);
             speed = speed - 100;
-        }
+        };
         for (let i = 1, speed = 900; i <= 2; i++) {
             this.startMovingLine(this.turtles, i, speed);
             speed = 700;
-        }
+        };
         for (let i = 1, speed = 900; i <= 3; i++) {
             this.startMovingLine(this.wood, i, speed);
             speed = speed - 200;
-        }
+        };
+        let divingTurtles = this.turtles.filter(turtle => turtle.diving);
+        window.setInterval(() => {
+          divingTurtles.forEach((turtle) =>{
+            turtle.dived = !turtle.dived;
+          });
+        }, 1000);
     };
 
 }

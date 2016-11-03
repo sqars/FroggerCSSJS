@@ -4,27 +4,27 @@ const TurtleService = {
 
   createTurtles: () =>{
     let turtles = [];
-    for (let i = 1, line = 1, posX = 3; i <= 7; i++) {
+    for (let i = 1, line = 1, diving = false, posX = 3; i <= 7; i++) {
       let turtle;
       if(line == 1){
         let size2Turtle = [];
         for (let j = 0, newPosX = posX; j < 2; j++) {
-            turtle = new Turtle(newPosX, line);
+            turtle = new Turtle(newPosX, line, diving);
             newPosX++;
             size2Turtle.push(turtle);
-        }
+        };
         posX = posX + 3;
         turtles = [
             ...turtles,
             ...size2Turtle
         ];
-      } else{
+      } else {
         let size3Turtle = [];
         for (let j = 0, newPosX = posX; j < 3; j++) {
-            turtle = new Turtle(newPosX, line);
+            turtle = new Turtle(newPosX, line, diving);
             newPosX++;
             size3Turtle.push(turtle);
-        }
+        };
         posX = posX + 4;
         turtles = [
             ...turtles,
@@ -34,6 +34,11 @@ const TurtleService = {
       if(i == 4){
         line = 2;
         posX = 0;
+      };
+      if( i === 1 || i === 4){
+        diving = true;
+      } else {
+        diving = false;
       }
     }
     return turtles;
