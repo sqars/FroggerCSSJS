@@ -1,4 +1,5 @@
 import Frogger from '../Frogger.js';
+import Water from '../Water/Water.js';
 import CarService from '../Cars/CarService.js';
 import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
@@ -12,14 +13,22 @@ export default class Board {
         this.frogger = new Frogger(this.board);
         this.froggerMoving = false;
         this.cars = CarService.createCars();
+        this.water = new Water();
+        this.turtles = TurtleService.createTurtles();
+        this.woods = WoodService.createWood();
     };
 
     setBoard() {
         this.context.clearRect(0, 0, this.board.width, this.board.height);
-        this.frogger.drawFrogger(this.context);
-        this.froggerMoving ? this.moveFrogger() : false;
+        this.water.drawWater(this.context);
         this.cars.forEach(car => car.drawCar(this.context));
         this.cars.forEach(car => car.move(this.cars));
+        this.turtles.forEach(turtle => turtle.drawTurtle(this.context));
+        this.turtles.forEach(turtle => turtle.move(this.turtles));
+        this.woods.forEach(wood => wood.drawWood(this.context));
+        this.woods.forEach(wood => wood.move(this.woods));
+        this.frogger.drawFrogger(this.context);
+        this.froggerMoving ? this.moveFrogger() : false;
         requestAnimationFrame(this.setBoard.bind(this));
     };
 

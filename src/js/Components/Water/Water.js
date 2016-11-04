@@ -1,13 +1,19 @@
-import StaticObject from '../StaticObject.js';
 import WaterService from './WaterService.js';
 
-export default class Water extends StaticObject{
-  constructor(posX, line){
-    super(posX);
-    this.posY = WaterService.generateYPos(line);
+export default class Water{
+  constructor(){
+    this.posX = 0;
+    this.posY = 50;
+    this.height = 250;
+    this.width = 700;
   }
 
-  setWaterPosition(board){
-    board[this.getPosition()].className = "water";
+  drawWater(ctx){
+    ctx.beginPath();
+    ctx.rect(this.posX, this.posY, this.width, this.height);
+    ctx.fillStyle = "blue";
+    ctx.fill();
+    ctx.closePath();
   }
+
 }

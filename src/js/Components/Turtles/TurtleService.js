@@ -4,42 +4,18 @@ const TurtleService = {
 
   createTurtles: () =>{
     let turtles = [];
-    for (let i = 1, line = 1, diving = false, posX = 3; i <= 7; i++) {
-      let turtle;
+    for (let i = 1, line = 1, posX = Math.random() * (100 - 0) + 0; i <= 7; i++) {
+      let turtle = new Turtle(posX, line, 1);
       if(line == 1){
-        let size2Turtle = [];
-        for (let j = 0, newPosX = posX; j < 2; j++) {
-            turtle = new Turtle(newPosX, line, diving);
-            newPosX++;
-            size2Turtle.push(turtle);
-        };
-        posX = posX + 3;
-        turtles = [
-            ...turtles,
-            ...size2Turtle
-        ];
+        posX = posX + Math.random() * (350 - 200) + 200;
       } else {
-        let size3Turtle = [];
-        for (let j = 0, newPosX = posX; j < 3; j++) {
-            turtle = new Turtle(newPosX, line, diving);
-            newPosX++;
-            size3Turtle.push(turtle);
-        };
-        posX = posX + 4;
-        turtles = [
-            ...turtles,
-            ...size3Turtle
-        ];
+        posX = posX + Math.random() * (400 - 300) + 300;
       }
+      turtles.push(turtle);
       if(i == 4){
         line = 2;
-        posX = 0;
+        posX = Math.random() * (300 - 100) + 100;
       };
-      if( i === 1 || i === 4){
-        diving = true;
-      } else {
-        diving = false;
-      }
     }
     return turtles;
   },
@@ -47,15 +23,26 @@ const TurtleService = {
   generateYPos: (line) => {
       switch (line) {
           case 1:
-              return 5;
+              return 150;
               break;
           case 2:
-              return 2;
+              return 250;
               break
           default:
               break;
       }
-  }
+  },
+
+  generateWidth: (line) => {
+      switch (line) {
+          case 1:
+              return 150;
+              break;
+          default:
+              return 100;
+              break;
+      }
+  },
 
 }
 
