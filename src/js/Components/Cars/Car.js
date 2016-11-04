@@ -15,10 +15,9 @@ export default class Car extends MovingObject{
 
   drawCar(ctx) {
       ctx.beginPath();
-      ctx.rect(this.posX, this.posY, this.height, this.width);
-      ctx.fillStyle = "red";
-      ctx.fill();
-      ctx.closePath();
+      ctx.rect(this.posX, this.posY, this.width, this.height);
+      ctx.strokeStyle = "red";
+      ctx.stroke();
   }
 
 }

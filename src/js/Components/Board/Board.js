@@ -19,7 +19,7 @@ export default class Board {
         this.frogger.drawFrogger(this.context);
         this.froggerMoving ? this.moveFrogger() : false;
         this.cars.forEach(car => car.drawCar(this.context));
-        this.cars.forEach(car => car.move());
+        this.cars.forEach(car => car.move(this.cars));
         requestAnimationFrame(this.setBoard.bind(this));
     };
 

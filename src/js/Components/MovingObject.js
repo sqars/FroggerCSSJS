@@ -6,26 +6,44 @@ export default class MovingObject{
     this.speed = speed;
   }
 
-  getPosition(){
-      return this.posX + this.posY * 14;
-  }
-
-  move(){
+  move(objects){
     switch(this.direction){
           case 'left':
-            this.posX < -100 ? this.posX = Math.random() * (900 - 700) + 700 : false;
+            if(this.posX < -50){
+              let max = 900;
+              let min = 700;
+              this.posX = Math.random() * (max - min) + min;
+              let filteredObjs = objects.filter(obj => obj.line === this.line);
+              let index = filteredObjs.indexOf(this);
+              filteredObjs.splice(index, 1);
+              filteredObjs.forEach((obj) =>{
+                while(this.posX >= obj.posX - obj.width - 50 && this.posX <= obj.posX + obj.width + 50){
+                  console.log('this X', this.posX, 'car X', obj.posX, 'car width', obj.posX + obj.width);
+                  this.posX = Math.random() * (max - min) + min;
+                }
+              });
+            };
             this.posX -= this.speed;
             break;
           case 'right':
-            this.posX > 750 ? this.posX = Math.random() * (-50 + 200) - 200 : false;
+            if(this.posX > 750){
+              let max = -150;
+              let min = -400;
+              this.posX = Math.random() * (max - min) + min;
+              let filteredObjs = objects.filter(obj => obj.line === this.line);
+              let index = filteredObjs.indexOf(this);
+              filteredObjs.splice(index, 1);
+              filteredObjs.forEach((obj) =>{
+                while(this.posX >= obj.posX - obj.width - 50 && this.posX <= obj.posX + obj.width + 50){
+                  console.log('this X', this.posX, 'car X', obj.posX, 'car width', obj.posX + obj.width);
+                  this.posX = Math.random() * (max - min) + min;
+                }
+              });
+            };
             this.posX += this.speed;
             break;
           default:
             break;
         }
-  }
-
-  sailFrogger(frogger){
-    frogger.posX = this.posX;
   }
 }

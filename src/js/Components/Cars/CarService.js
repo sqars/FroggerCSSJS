@@ -4,25 +4,14 @@ const CarService = {
 
     createCars: () => {
         let cars = [];
-        for (let i = 1, line = 1, posX = 0; i <= 12; i++) {
-            let car;
-            // if (line === 5) {
-            //     let size3Car = [];
-            //     for (let j = 0, newPosX = posX; j < 3; j++) {
-            //         car = new Car(newPosX, line);
-            //         newPosX++;
-            //         size3Car.push(car);
-            //     }
-            //     posX = posX + 4;
-            //     cars = [
-            //         ...cars,
-            //         ...size3Car
-            //     ];
-            // } else {
-                car = new Car(posX, line, 1.5);
+        for (let i = 1, line = 1, posX = 0; i <= 15; i++) {
+            let car = new Car(posX, line, 1);
+            if (line === 5) {
+                posX = posX + Math.random() * (400 - 150) + 150;
+            } else {
                 posX = posX + Math.random() * (300 - 100) + 100;
-                cars.push(car);
-            // }
+            }
+            cars.push(car);
             if (i % 3 == 0) {
                 line++;
                 switch (line) {
