@@ -12,41 +12,49 @@ export default class MovingObject {
         switch (this.direction) {
             case 'left':
                 if (this.posX < -150) {
-                    max = 1000;
-                    min = 700;
-                    this.posX = Math.random() * (max - min) + min;
+                    max = 20;
+                    min = 14;
+                    this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                     let filteredObjs = filterObjs(this, objects);
+                    let attempts = 0;
                     filteredObjs.forEach((obj) => {
-                        while (this.checkCollision(obj)) {
-                            this.posX = Math.random() * (max - min) + min;
+                        attempts = 0;
+                        while (this.checkCollision(obj) && attempts < 15) {
+                            console.log(attempts);
+                            this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
+                            attempts++;
                         }
                     });
+                    attempts >=15 ? this.posX = 1400 : false;
                 };
                 this.posX -= this.speed;
                 break;
             case 'right':
                 if (this.posX > 750) {
-                    max = -250;
-                    min = -650;
-                    this.posX = Math.random() * (max - min) + min;
+                    max = -5;
+                    min = -13;
+                    this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                     let filteredObjs = filterObjs(this, objects);
+                    let attempts = 0;
                     filteredObjs.forEach((obj) => {
-                        while (this.checkCollision(obj)) {
-                            this.posX = Math.random() * (max - min) + min;
+                        attempts = 0;
+                        while (this.checkCollision(obj) && attempts < 15) {
+                            this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
+                            attempts++;
                         }
                     });
+                    attempts >=15 ? this.posX = -1000 : false;
                 };
                 this.posX += this.speed;
                 break;
             default:
                 break;
         };
-
     };
 
     checkCollision(obj) {
         let result = false;
-        this.posX >= obj.posX - obj.width - 50 && this.posX <= obj.posX + obj.width + 50 ? result = true : false;
+        Math.abs(obj.posX - this.posX) < this.width + 50 ? result = true : result = false;
         return result;
     };
 
