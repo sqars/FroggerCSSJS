@@ -12,7 +12,7 @@ export default class MovingObject {
         switch (this.direction) {
             case 'left':
                 if (this.posX < -150) {
-                    max = 20;
+                    max = 18;
                     min = 14;
                     this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                     let filteredObjs = filterObjs(this, objects);
@@ -32,13 +32,14 @@ export default class MovingObject {
             case 'right':
                 if (this.posX > 750) {
                     max = -5;
-                    min = -13;
+                    min = -12;
                     this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                     let filteredObjs = filterObjs(this, objects);
                     let attempts = 0;
                     filteredObjs.forEach((obj) => {
                         attempts = 0;
                         while (this.checkCollision(obj) && attempts < 15) {
+                            console.log(attempts);
                             this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                             attempts++;
                         }

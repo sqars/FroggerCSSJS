@@ -1,26 +1,40 @@
 import Wood from './Wood.js';
 
 const WoodService = {
-    createWood: () => {
-        let woods = [];
-        for (let i = 1, line = 1, posX = Math.random() * (100 - 0) + 0; i <= 8; i++) {
-            let wood = new Wood(posX, line, 1);
-            if (line === 1) {
-              posX = posX + Math.random() * (400 - 300) + 300;
-            } else if (line === 2) {
-              posX = posX + Math.random() * (600 - 500) + 500;
-            } else {
-              posX = posX + Math.random() * (500 - 400) + 400;
+        createWood: () => {
+            let woods = [];
+            let placed = 0;
+            let line = 1;
+            let attempts = 0;
+            while (placed < 8) {
+                let posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
+                let available = true;
+                let filteredLine = woods.filter(wood => wood.line === line);
+                filteredLine.forEach((checkedWood) => {
+                    Math.abs(checkedWood.posX - posX) < checkedWood.width + 50 ? available = false : false;
+                });
+                if (available) {
+                    let wood = new Wood(posX, line, 1);
+                    woods.push(wood);
+                    placed++;
+                    attempts = 0;
+                } else {
+                    attempts++;
+                }
+
+                if (attempts > 15) {
+                    let wood = new Wood(-500, line, 1);
+                    woods.push(wood);
+                    placed++;
+                }
+
+                if (placed == 3) {
+                    line = 2;
+                } else if (placed == 5) {
+                    line = 3;
+                }
+
             }
-            woods.push(wood);
-            if (i == 3) {
-                posX = Math.random() * (100 - 0) + 0;
-                line = 2;
-            } else if (i == 5) {
-                posX = Math.random() * (100 - 0) + 0;
-                line = 3;
-            }
-        }
         return woods;
     },
 
