@@ -23,6 +23,8 @@ const CarService = {
             }
 
             if (attempts > 15) {
+                let car = new Car(-500, line, 1);
+                cars.push(car);
                 placed++;
             }
 

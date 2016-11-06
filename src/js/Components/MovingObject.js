@@ -32,7 +32,7 @@ export default class MovingObject {
             case 'right':
                 if (this.posX > 750) {
                     max = -5;
-                    min = -12;
+                    min = -11;
                     this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                     let filteredObjs = filterObjs(this, objects);
                     let attempts = 0;

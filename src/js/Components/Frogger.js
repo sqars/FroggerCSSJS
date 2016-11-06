@@ -26,18 +26,22 @@ export default class Frogger extends MovingObject {
             case 37:
                 this.direction = 'left';
                 result = true;
+                this.posX - 50 < 0 ? result = false : false;
                 break;
             case 38:
                 this.direction = 'up';
                 result = true;
+                this.posY - 50 < 0 ? result = false : false;
                 break;
             case 39:
                 this.direction = 'right';
                 result = true;
+                this.posX + 50 > 650 ? result = false : false;
                 break;
             case 40:
                 this.direction = 'down';
                 result = true;
+                this.posY + 50 > 600 ? result = false : false;
                 break;
             default:
                 result = false;

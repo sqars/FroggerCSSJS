@@ -24,6 +24,8 @@ const TurtleService = {
             }
 
             if (attempts > 15) {
+                let turtle = new Turtle(-500, line, 1);
+                turtles.push(turtle);
                 placed++;
             }
 
