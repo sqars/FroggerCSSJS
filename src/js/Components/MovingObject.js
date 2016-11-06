@@ -11,7 +11,6 @@ export default class MovingObject {
         let min;
         switch (this.direction) {
             case 'left':
-                this.posX -= this.speed;
                 if (this.posX < -150) {
                     max = 1000;
                     min = 700;
@@ -23,9 +22,9 @@ export default class MovingObject {
                         }
                     });
                 };
+                this.posX -= this.speed;
                 break;
             case 'right':
-                this.posX += this.speed;
                 if (this.posX > 750) {
                     max = -250;
                     min = -650;
@@ -37,6 +36,7 @@ export default class MovingObject {
                         }
                     });
                 };
+                this.posX += this.speed;
                 break;
             default:
                 break;

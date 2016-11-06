@@ -9,6 +9,6 @@ export default class Game {
     startGame() {
         this.board.setBoard();
         // this.board.startBoard();
-        document.addEventListener('keydown', () => this.board.setFroggerMove(event));
+        document.addEventListener('keydown',() => this.board.setFroggerMove(event));
     }
 }

@@ -33,8 +33,10 @@ export default class Board {
     };
 
     setFroggerMove(event){
-      let isMoving = this.frogger.setDirection(event);
-      isMoving ? this.froggerMoving = true : false;
+      if(!this.froggerMoving){
+        let isMoving = this.frogger.setDirection(event);
+        isMoving ? this.froggerMoving = true : false;
+      }
     }
 
     moveFrogger() {
