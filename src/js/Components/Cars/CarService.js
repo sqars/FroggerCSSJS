@@ -2,36 +2,42 @@ import Car from './Car.js';
 
 const CarService = {
 
+    // max = 1000;
+    // min = 700;
+    // this.posX = Math.random() * (max - min) + min;
+    // let filteredObjs = filterObjs(this, objects);
+    // filteredObjs.forEach((obj) => {
+    //     while (this.checkCollision(obj)) {
+    //         this.posX = Math.random() * (max - min) + min;
+    //     }
+    // });
+    // function filterObjs(checkedObj, objs) {
+    //     let filteredObjs = objs.filter(obj => obj.line === checkedObj.line);
+    //     let index = filteredObjs.indexOf(checkedObj);
+    //     filteredObjs.splice(index, 1);
+    //     return filteredObjs;
+    // }
+
     createCars: () => {
         let cars = [];
-        for (let i = 1, line = 1, posX = 0; i <= 15; i++) {
+        let placed = 0;
+        let line = 1
+        while (placed <= 15) {
+            let posX = (Math.floor(Math.random() * (1 + 15 - 1)) + 1) * 50;
             let car = new Car(posX, line, 1);
-            if (line === 5) {
-                posX = posX + Math.random() * (400 - 150) + 150;
-            } else {
-                posX = posX + Math.random() * (300 - 100) + 100;
+            let available = true;
+            let filteredLine = cars.filter(car => car.line === line);
+            filteredLine.forEach((checkedCar) => {
+                Math.abs(checkedCar.posX - car.posX) < car.width + 50 ? available = false : false;
+            });
+            if(available){
+                cars.push(car);
+                placed++;
             }
-            cars.push(car);
-            if (i % 3 == 0) {
+            if (placed % 3 == 0) {
                 line++;
-                switch (line) {
-                    case 2:
-                        posX = 400;
-                        break
-                    case 3:
-                        posX = 150;
-                        break;
-                    case 4:
-                        posX = 500;
-                        break;
-                    case 5:
-                        posX = 300;
-                        break;
-                    default:
-                        break;
-                };
             }
-        }
+        };
         return cars;
     },
 
