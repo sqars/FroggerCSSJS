@@ -16,7 +16,8 @@ export default class Board {
         this.water = new Water();
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
-    };
+        this.flag = true;
+    }
 
     setBoard() {
         this.context.clearRect(0, 0, this.board.width, this.board.height);
@@ -28,19 +29,26 @@ export default class Board {
         this.woods.forEach(wood => wood.drawWood(this.context));
         this.woods.forEach(wood => wood.move(this.woods));
         this.frogger.drawFrogger(this.context);
+        TurtleService.checkSail(this.frogger, this.turtles);
         this.froggerMoving ? this.moveFrogger() : false;
         requestAnimationFrame(this.setBoard.bind(this));
-    };
+    }
 
-    setFroggerMove(event){
-      if(!this.froggerMoving){
-        let isMoving = this.frogger.setDirection(event);
-        isMoving ? this.froggerMoving = true : false;
-      }
+    setFroggerMove(event) {
+        if (!this.froggerMoving) {
+            let isMoving = this.frogger.setDirection(event);
+            isMoving ? this.froggerMoving = true : false;
+        }
     }
 
     moveFrogger() {
-      this.froggerMoving = this.frogger.move(this.frogger.direction);
-    };
+        this.froggerMoving = this.frogger.move(this.frogger.direction);
+    }
+
+    checkCollision() {
+        this.cars.forEach((car) => {
+            Math.abs(car.posX - this.frogger.posX) < car.width && car.posY === this.frogger.posY ? console.log('collision') : false;
+        })
+    }
 
 }

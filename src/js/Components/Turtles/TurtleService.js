@@ -19,8 +19,8 @@ const TurtleService = {
                 turtles.push(turtle);
                 placed++;
                 attempts = 0;
-            } else{
-              attempts++;
+            } else {
+                attempts++;
             }
 
             if (attempts > 15) {
@@ -52,13 +52,26 @@ const TurtleService = {
     generateWidth: (line) => {
         switch (line) {
             case 1:
-                return 150;
+                return 100;
                 break;
             default:
-                return 100;
+                return 150;
                 break;
         }
     },
+
+    checkSail: (frogger, turtles) => {
+        turtles.forEach((turtle) => {
+            const checker = turtle.posX - frogger.posX;
+            if (Math.abs(checker) < turtle.width && checker < 0 && turtle.posY === frogger.posY) {
+                if (turtle.width > 50) {
+                    frogger.posX = turtle.posX + Math.round(Math.abs(checker) / 50) * 50;
+                } else {
+                    frogger.posX = turtle.posX;
+                }
+            }
+        });
+    }
 
 }
 

@@ -20,7 +20,6 @@ export default class MovingObject {
                     filteredObjs.forEach((obj) => {
                         attempts = 0;
                         while (this.checkCollision(obj) && attempts < 15) {
-                            console.log(attempts);
                             this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                             attempts++;
                         }
@@ -39,7 +38,6 @@ export default class MovingObject {
                     filteredObjs.forEach((obj) => {
                         attempts = 0;
                         while (this.checkCollision(obj) && attempts < 15) {
-                            console.log(attempts);
                             this.posX = (Math.floor(Math.random() * (1 + max - min)) + min) * 50;
                             attempts++;
                         }
