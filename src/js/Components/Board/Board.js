@@ -5,6 +5,7 @@ import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
 import WaterService from '../Water/WaterService.js';
 import WoodService from '../Wood/WoodService.js';
+import GrassService from '../BlockingObject/GrassService.js';
 
 export default class Board {
     constructor() {
@@ -16,11 +17,13 @@ export default class Board {
         this.water = new Water();
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
+        this.grass = GrassService.createGrass();
     }
 
     setBoard() {
         this.context.clearRect(0, 0, this.board.width, this.board.height);
         this.water.drawWater(this.context);
+        this.grass.forEach(grass => grass.drawGrass(this.context));
         this.cars.forEach(car => car.drawCar(this.context));
         this.cars.forEach(car => car.move(this.cars));
         this.turtles.forEach(turtle => turtle.drawTurtle(this.context));
