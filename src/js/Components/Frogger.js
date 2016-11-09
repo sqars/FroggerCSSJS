@@ -10,6 +10,7 @@ export default class Frogger extends MovingObject {
         this.direction = 'up';
         this.lives = 3;
         this.movingCount = 0;
+        this.speed = 2;
     };
 
     drawFrogger(ctx) {
@@ -51,18 +52,19 @@ export default class Frogger extends MovingObject {
 
     move(direction) {
         let result = false;
+        let speed = this.speed;
         switch (direction) {
             case 'left':
-                this.posX -= 2;
+                this.posX -= speed;
                 break;
             case 'up':
-                this.posY -= 2;
+                this.posY -= speed;
                 break;
             case 'right':
-                this.posX += 2;
+                this.posX += speed;
                 break;
             case 'down':
-                this.posY += 2;
+                this.posY += speed;
                 break;
             default:
                 break;

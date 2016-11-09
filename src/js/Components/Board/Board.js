@@ -16,7 +16,6 @@ export default class Board {
         this.water = new Water();
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
-        this.flag = true;
     }
 
     setBoard() {
@@ -29,8 +28,10 @@ export default class Board {
         this.woods.forEach(wood => wood.drawWood(this.context));
         this.woods.forEach(wood => wood.move(this.woods));
         this.frogger.drawFrogger(this.context);
-        TurtleService.checkSail(this.frogger, this.turtles);
         this.froggerMoving ? this.moveFrogger() : false;
+        this.frogger.speed = 2;
+        WoodService.checkSail(this.frogger, this.woods, this.froggerMoving);
+        TurtleService.checkSail(this.frogger, this.turtles, this.froggerMoving);
         requestAnimationFrame(this.setBoard.bind(this));
     }
 

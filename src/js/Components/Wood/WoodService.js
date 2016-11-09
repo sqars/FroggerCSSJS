@@ -66,6 +66,23 @@ const WoodService = {
             default:
                 break;
         };
+    },
+
+    checkSail: (frogger, woods, froggerMoving) => {
+        woods.forEach((wood) => {
+            const checker = wood.posX - frogger.posX;
+            if (Math.abs(checker) < wood.width - 15 && checker < 0 && wood.posY === frogger.posY) {
+              if(froggerMoving){
+                frogger.direction === 'right' ? frogger.speed = 3 : frogger.speed = 1;
+              } else{
+                if (wood.width > 50) {
+                    frogger.posX = wood.posX + Math.round(Math.abs(checker) / 50) * 50;
+                } else {
+                    frogger.posX = wood.posX;
+                }
+              }
+            }
+        });
     }
 };
 
