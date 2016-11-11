@@ -11,18 +11,18 @@ const GrassService = {
 
 function createSmallGrass(){
   let grassLeft = new Grass(0, 25);
-  let grassRight = new Grass(675, 75);
+  let grassRight = new Grass(675, 25);
   return [grassLeft, grassRight];
-}
+};
 
 function createBigGrass(){
   let grassArr = [];
-  for (let i = 0, posX = 87.5; i < 4; i++){
-    let grass = new Grass(posX, 75);
-    posX += 150;
+  for (let i = 0, posX = 97.22; i < 4; i++){
+    let grass = new Grass(posX, 72.22);
+    posX += 144.44;
     grassArr.push(grass);
   }
   return grassArr;
-}
+};
 
 export default GrassService;

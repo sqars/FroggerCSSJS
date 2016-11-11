@@ -5,7 +5,8 @@ import BoardService from './BoardService.js';
 import TurtleService from '../Turtles/TurtleService.js';
 import WaterService from '../Water/WaterService.js';
 import WoodService from '../Wood/WoodService.js';
-import GrassService from '../BlockingObject/GrassService.js';
+import GrassService from '../LastLineObjs/GrassService.js';
+import WinningSpotService from '../LastLineObjs/WinningSpotService.js';
 
 export default class Board {
     constructor() {
@@ -18,12 +19,14 @@ export default class Board {
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
         this.grass = GrassService.createGrass();
+        this.winningSpots = WinningSpotService.createWinningSpots();
     }
 
     setBoard() {
         this.context.clearRect(0, 0, this.board.width, this.board.height);
         this.water.drawWater(this.context);
         this.grass.forEach(grass => grass.drawGrass(this.context));
+        this.winningSpots.forEach(spot => spot.drawSpot(this.context));
         this.cars.forEach(car => car.drawCar(this.context));
         this.cars.forEach(car => car.move(this.cars));
         this.turtles.forEach(turtle => turtle.drawTurtle(this.context));

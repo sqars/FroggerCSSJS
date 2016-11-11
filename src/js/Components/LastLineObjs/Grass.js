@@ -9,7 +9,7 @@ export default class Grass{
   drawGrass(ctx){
     ctx.beginPath();
     ctx.rect(this.posX, this.posY, this.width, this.height);
-    ctx.fillStyle = "lightgreen";
+    ctx.fillStyle = "#7eaea8";
     ctx.fill();
     ctx.closePath();
   };
