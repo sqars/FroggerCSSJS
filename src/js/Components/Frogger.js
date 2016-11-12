@@ -3,6 +3,9 @@ import DrawFunctions from '../Utilities/DrawFunctions.js';
 import BoardService from './Board/BoardService.js';
 import GrassService from './LastLineObjs/GrassService.js';
 import CarService from './Cars/CarService.js';
+import TurtleService from './Turtles/TurtleService.js';
+
+import CheckArea from '../Utilities/CheckArea.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -66,13 +69,21 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
     }
 
-    checkCollisions(board, grass, cars) {
+    checkCollisions(board, grass, cars, turtles) {
+        const {
+            checkIfGrassArea,
+            checkIfCarArea,
+            checkIfTurtleArea
+        } = CheckArea;
         if (this.moving) {
 
             let blockersCollisions = [];
 
             blockersCollisions.push(BoardService.checkOutOfMap(this, board));
-            blockersCollisions.push(GrassService.checkCollision(this, grass));
+
+            if (checkIfGrassArea(this)) { // check collision with grass only if frogger is in 'grass' area
+                blockersCollisions.push(GrassService.checkCollision(this, grass));
+            }
 
             for (let i = 0; i < blockersCollisions.length; i++) {
                 if (blockersCollisions[i]) {
@@ -85,10 +96,14 @@ export default class Frogger extends MovingObject {
 
         let movingObjsCollisions = [];
 
-        if(this.posY >= 350 && this.posY <= 650){
-          movingObjsCollisions.push(CarService.checkCollision(this, cars));
+        if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
+            movingObjsCollisions.push(CarService.checkCollision(this, cars));
         }
-        
+
+        if (checkIfTurtleArea(this)) { // check collision with turtles only if frogger is in 'turtle' area
+            movingObjsCollisions.push(TurtleService.checkCollision(this, turtles));
+        }
+
         for (let i = 0; i < movingObjsCollisions.length; i++) {
             if (movingObjsCollisions[i]) {
                 console.log('kolizja');

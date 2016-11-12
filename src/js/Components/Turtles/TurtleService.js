@@ -1,4 +1,5 @@
 import Turtle from './Turtle.js';
+import checkCollision from '../../Utilities/CollisionDetection.js';
 
 const TurtleService = {
 
@@ -58,6 +59,17 @@ const TurtleService = {
                 return 150;
                 break;
         }
+    },
+
+    checkCollision: (frogger, turtlesArr) =>{
+      let result = false;
+      for(let i = 0; i < turtlesArr.length; i++){
+        if(checkCollision(frogger, turtlesArr[i])){
+          result = true;
+          break;
+        }
+      };
+      return result;
     }
 
 }

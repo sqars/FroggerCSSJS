@@ -37,7 +37,8 @@ export default class Board {
       this.turtles.forEach(turtle => turtle.drawTurtle(this.context)); // draw Turtles
       this.woods.forEach(wood => wood.drawWood(this.context)); // draw Woods
       this.frogger.drawFrogger(this.context); // draw Frogger
-      DrawFunctions.colorText(this.context, 'posX: ' + this.frogger.posX + ', posY: ' + this.frogger.posY, this.frogger.posX, this.frogger.posY, 'black');
+
+      DrawFunctions.colorText(this.context, 'posX: ' + this.frogger.posX + ', posY: ' + this.frogger.posY, this.frogger.posX, this.frogger.posY, 'black'); // cheat to display frogger positon
     }
 
     moveAll(){
@@ -45,6 +46,6 @@ export default class Board {
       this.turtles.forEach(turtle => turtle.move(this.turtles)); // move Turtles
       this.woods.forEach(wood => wood.move(this.woods)); // move Woods
       this.frogger.move();
-      this.frogger.checkCollisions(this.board, this.grass, this.cars);
+      this.frogger.checkCollisions(this.board, this.grass, this.cars, this.turtles);
     }
 }
