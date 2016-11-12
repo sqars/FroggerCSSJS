@@ -5,6 +5,11 @@ const DrawFunctions = {
         ctx.fillStyle = color;
         ctx.fill();
         ctx.closePath();
+  },
+
+  colorText: (ctx, showWords, textX, textY, color) => {
+    ctx.fillStyle = color;
+    ctx.fillText(showWords, textX, textY);
   }
 }
 

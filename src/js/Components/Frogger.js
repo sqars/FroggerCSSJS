@@ -2,6 +2,7 @@ import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
 import BoardService from './Board/BoardService.js';
 import GrassService from './LastLineObjs/GrassService.js';
+import CarService from './Cars/CarService.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -22,7 +23,7 @@ export default class Frogger extends MovingObject {
 
     drawFrogger(ctx) {
         DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'green');
-    }
+    };
 
     triggerMove(event) {
         if (!this.moving) {
@@ -30,7 +31,7 @@ export default class Frogger extends MovingObject {
             this.setDirection(event);
             this.moving = true;
         }
-    }
+    };
 
     setDirection(event) {
         switch (event.which) {
@@ -48,32 +49,54 @@ export default class Frogger extends MovingObject {
                 break;
             default:
                 false;
-        };
-    }
+        }
+    };
 
     calculateFroggerPrevPos() {
         this.prevDirection = this.direction;
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
+    };
+
+    revertFroggerPosition() {
+        this.posX = this.prevPosX;
+        this.posY = this.prevPosY;
+        this.direction = this.prevDirection;
+        this.moving = false;
+        this.movingCount = 0;
     }
 
-    checkCollisions(board, grass) {
-        let blockersCollisions = [];
+    checkCollisions(board, grass, cars) {
+        if (this.moving) {
+
+            let blockersCollisions = [];
+
+            blockersCollisions.push(BoardService.checkOutOfMap(this, board));
+            blockersCollisions.push(GrassService.checkCollision(this, grass));
+
+            for (let i = 0; i < blockersCollisions.length; i++) {
+                if (blockersCollisions[i]) {
+                    this.revertFroggerPosition();
+                    break;
+                }
+            };
+
+        };
+
         let movingObjsCollisions = [];
 
-        blockersCollisions.push(BoardService.checkOutOfMap(this, board));
-        blockersCollisions.push(GrassService.checkCollision(this, grass));
-
-        blockersCollisions.forEach((blocker) => {
-            if (blocker) {
-                this.posX = this.prevPosX;
-                this.posY = this.prevPosY;
-                this.direction = this.prevDirection;
-                this.moving = false;
-                this.movingCount = 0;
+        if(this.posY >= 350 && this.posY <= 650){
+          movingObjsCollisions.push(CarService.checkCollision(this, cars));
+        }
+        
+        for (let i = 0; i < movingObjsCollisions.length; i++) {
+            if (movingObjsCollisions[i]) {
+                console.log('kolizja');
+                break;
             }
-        });
-    }
+        };
+
+    };
 
     move() {
         if (this.moving) {
@@ -99,6 +122,6 @@ export default class Frogger extends MovingObject {
                 this.moving = false;
             };
         }
-    }
+    };
 
 }

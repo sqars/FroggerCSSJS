@@ -11,11 +11,12 @@ const GrassService = {
 
   checkCollision: (frogger, grassArr) =>{
     let result = false;
-    grassArr.forEach((grass) =>{
-      if(checkCollision(frogger, grass)){
+    for(let i = 0; i < grassArr.length; i++){
+      if(checkCollision(frogger, grassArr[i])){
         result = true;
+        break;
       }
-    });
+    };
     return result;
   }
 };

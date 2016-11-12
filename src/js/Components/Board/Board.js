@@ -7,6 +7,7 @@ import WaterService from '../Water/WaterService.js';
 import WoodService from '../Wood/WoodService.js';
 import GrassService from '../LastLineObjs/GrassService.js';
 import WinningSpotService from '../LastLineObjs/WinningSpotService.js';
+import DrawFunctions from '../../Utilities/DrawFunctions.js';
 
 export default class Board {
     constructor() {
@@ -36,6 +37,7 @@ export default class Board {
       this.turtles.forEach(turtle => turtle.drawTurtle(this.context)); // draw Turtles
       this.woods.forEach(wood => wood.drawWood(this.context)); // draw Woods
       this.frogger.drawFrogger(this.context); // draw Frogger
+      DrawFunctions.colorText(this.context, 'posX: ' + this.frogger.posX + ', posY: ' + this.frogger.posY, this.frogger.posX, this.frogger.posY, 'black');
     }
 
     moveAll(){
