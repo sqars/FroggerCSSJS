@@ -1,19 +1,19 @@
 const BoardService = {
 
-  clearBoard: (board) => {
-    board.forEach((div)=>{
-      div.className = "";
-    })
-  },
+    clearBoard: (board) => {
+        board.forEach((div) => {
+            div.className = "";
+        })
+    },
 
-  checkOutOfMap(frogger, board){
-    let result = false;
-    if( frogger.nextPosX >= board.width || frogger.nextPosX < 0 ||
-        frogger.nextPosY >= board.height || frogger.nextPosY < 0){
-      result = true;
-    }
-    return result;
-  },
+    checkOutOfMap(frogger, board) {
+        let result = false;
+        if (frogger.posX > board.width - 50 || frogger.posX < 0 ||
+            frogger.posY > board.height - 50 || frogger.posY < 0) {
+            result = true;
+        }
+        return result;
+    },
 
 };
 

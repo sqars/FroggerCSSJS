@@ -1,4 +1,5 @@
 import Grass from './Grass.js';
+import checkCollision from '../../Utilities/CollisionDetection.js';
 
 const GrassService = {
   createGrass: () =>{
@@ -6,6 +7,16 @@ const GrassService = {
       ...createSmallGrass(),
       ...createBigGrass()
     ];
+  },
+
+  checkCollision: (frogger, grassArr) =>{
+    let result = false;
+    grassArr.forEach((grass) =>{
+      if(checkCollision(frogger, grass)){
+        result = true;
+      }
+    });
+    return result;
   }
 };
 

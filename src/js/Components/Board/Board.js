@@ -43,5 +43,6 @@ export default class Board {
       this.turtles.forEach(turtle => turtle.move(this.turtles)); // move Turtles
       this.woods.forEach(wood => wood.move(this.woods)); // move Woods
       this.frogger.move();
+      this.frogger.checkCollisions(this.board, this.grass, this.cars);
     }
 }
