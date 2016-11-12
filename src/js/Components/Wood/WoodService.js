@@ -66,7 +66,7 @@ const WoodService = {
             default:
                 break;
         };
-    }
+    },
 };
 
 export default WoodService;

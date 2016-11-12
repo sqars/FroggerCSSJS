@@ -21,6 +21,14 @@ const CheckArea = {
         result = true;
       }
       return result;
+    },
+
+    checkIfWoodArea: (frogger) => {
+      let result = false;
+      if(frogger.posY <= 250 && frogger.posY >= 50){
+        result = true;
+      }
+      return result;
     }
 }
 

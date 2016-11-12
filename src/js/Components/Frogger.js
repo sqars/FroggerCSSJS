@@ -1,11 +1,9 @@
 import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
 import BoardService from './Board/BoardService.js';
-import GrassService from './LastLineObjs/GrassService.js';
-import CarService from './Cars/CarService.js';
-import TurtleService from './Turtles/TurtleService.js';
 
 import CheckArea from '../Utilities/CheckArea.js';
+import CollisionDetection from '../Utilities/CollisionDetection.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -75,14 +73,20 @@ export default class Frogger extends MovingObject {
             checkIfCarArea,
             checkIfTurtleArea
         } = CheckArea;
+
+        const {
+            findCollision,
+            checkOutOfMap
+        } = CollisionDetection;
+
         if (this.moving) {
 
             let blockersCollisions = [];
 
-            blockersCollisions.push(BoardService.checkOutOfMap(this, board));
+            blockersCollisions.push(checkOutOfMap(this, board));
 
             if (checkIfGrassArea(this)) { // check collision with grass only if frogger is in 'grass' area
-                blockersCollisions.push(GrassService.checkCollision(this, grass));
+                blockersCollisions.push(findCollision(this, grass));
             }
 
             for (let i = 0; i < blockersCollisions.length; i++) {
@@ -97,11 +101,11 @@ export default class Frogger extends MovingObject {
         let movingObjsCollisions = [];
 
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
-            movingObjsCollisions.push(CarService.checkCollision(this, cars));
+            movingObjsCollisions.push(findCollision(this, cars));
         }
 
         if (checkIfTurtleArea(this)) { // check collision with turtles only if frogger is in 'turtle' area
-            movingObjsCollisions.push(TurtleService.checkCollision(this, turtles));
+            movingObjsCollisions.push(findCollision(this, turtles));
         }
 
         for (let i = 0; i < movingObjsCollisions.length; i++) {

@@ -1,5 +1,4 @@
 import Car from './Car.js';
-import checkCollision from '../../Utilities/CollisionDetection.js';
 
 const CarService = {
 
@@ -89,17 +88,6 @@ const CarService = {
             default:
                 break;
         }
-    },
-
-    checkCollision: (frogger, carsArr) => {
-      let result = false;
-      for(let i = 0; i < carsArr.length; i++){
-        if(checkCollision(frogger, carsArr[i])){
-          result = true;
-          break;
-        }
-      };
-      return result;
     }
 }
 
