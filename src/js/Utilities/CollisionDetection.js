@@ -27,7 +27,7 @@ const CollisionDetection = {
         let result = false;
         for (let i = 0; i < objectsArr.length; i++) {
             if (CollisionDetection.checkCollision(frogger, objectsArr[i])) {
-                result = true;
+                result = objectsArr[i];
                 break;
             }
         };

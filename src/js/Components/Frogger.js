@@ -67,9 +67,10 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
     }
 
-    checkCollisions(board, grass, cars, turtles) {
+    checkCollisions(board, grass, cars, turtles, winningSpots) {
         const {
-            checkIfGrassArea,
+            checkIfOutOfMapArea,
+            checkIfLastLineArea,
             checkIfCarArea,
             checkIfTurtleArea
         } = CheckArea;
@@ -83,10 +84,18 @@ export default class Frogger extends MovingObject {
 
             let blockersCollisions = [];
 
-            blockersCollisions.push(checkOutOfMap(this, board));
+            if (checkIfLastLineArea(this)) { // check collision on lastline only if frogger is on lastline area
+                const winningSpot = findCollision(this, winningSpots);
+                if (winningSpot) {
+                    this.posX = winningSpot.posX + 11.11;
+                    //TODO: add function for reseting frogger
+                } else {
+                    blockersCollisions.push(findCollision(this, grass));
+                }
+            }
 
-            if (checkIfGrassArea(this)) { // check collision with grass only if frogger is in 'grass' area
-                blockersCollisions.push(findCollision(this, grass));
+            if (checkIfOutOfMapArea(this)) { // check leaving board if frogger is in the edge of board
+                blockersCollisions.push(checkOutOfMap(this, board));
             }
 
             for (let i = 0; i < blockersCollisions.length; i++) {

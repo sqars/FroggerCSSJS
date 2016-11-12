@@ -1,4 +1,12 @@
 const CheckArea = {
+    checkIfOutOfMapArea: (frogger) => {
+      let result = false;
+      if (frogger.posX <= 0 || frogger.posX >= 650 || frogger.posY <= 0 || frogger.posY >= 600) {
+          result = true;
+      }
+      return result;
+    },
+
     checkIfCarArea: (frogger) => {
         let result = false;
         if (frogger.posY >= 350 && frogger.posY <= 550) {
@@ -7,7 +15,7 @@ const CheckArea = {
         return result;
     },
 
-    checkIfGrassArea: (frogger) => {
+    checkIfLastLineArea: (frogger) => {
         let result = false;
         if (frogger.posY <= 50 && frogger.posY >= 0) {
             result = true;
