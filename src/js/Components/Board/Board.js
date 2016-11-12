@@ -34,10 +34,11 @@ export default class Board {
         this.woods.forEach(wood => wood.drawWood(this.context));
         this.woods.forEach(wood => wood.move(this.woods));
         this.frogger.drawFrogger(this.context);
-        this.froggerMoving ? this.moveFrogger() : false;
+        this.moveFrogger();
         this.frogger.speed = 2;
         WoodService.checkSail(this.frogger, this.woods, this.froggerMoving);
         TurtleService.checkSail(this.frogger, this.turtles, this.froggerMoving);
+        WinningSpotService.checkWin(this.frogger, this.winningSpots);
         requestAnimationFrame(this.setBoard.bind(this));
     }
 
@@ -49,7 +50,12 @@ export default class Board {
     }
 
     moveFrogger() {
+      if(this.froggerMoving && !GrassService.checkCollision(this.frogger, this.grass)){
         this.froggerMoving = this.frogger.move(this.frogger.direction);
+      } else{
+        this.froggerMoving = false;
+      }
+
     }
 
     checkCollision() {

@@ -1,4 +1,5 @@
 import MovingObject from './MovingObject.js';
+import DrawFunctions from '../Utilities/DrawFunctions.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -14,11 +15,7 @@ export default class Frogger extends MovingObject {
     };
 
     drawFrogger(ctx) {
-        ctx.beginPath();
-        ctx.rect(this.posX, this.posY, this.height, this.width);
-        ctx.fillStyle = "green";
-        ctx.fill();
-        ctx.closePath();
+        DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'green');
     }
 
     setDirection(event) {

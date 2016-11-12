@@ -1,5 +1,6 @@
 import MovingObject from '../MovingObject.js';
 import WoodService from './WoodService.js';
+import DrawFunctions from '../../Utilities/DrawFunctions.js';
 
 export default class Wood extends MovingObject{
   constructor(posX, line, speed){
@@ -13,11 +14,7 @@ export default class Wood extends MovingObject{
   }
 
   drawWood(ctx) {
-      ctx.beginPath();
-      ctx.rect(this.posX, this.posY, this.width, this.height);
-      ctx.fillStyle = "beige";
-      ctx.fill();
-      ctx.closePath();
+      DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'beige');
   }
 
-}
+} 

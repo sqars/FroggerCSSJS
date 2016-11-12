@@ -1,3 +1,5 @@
+import DrawFunctions from '../../Utilities/DrawFunctions.js';
+
 export default class WinningSpot{
   constructor(posX){
     this.posX = posX;
@@ -7,10 +9,6 @@ export default class WinningSpot{
   };
 
   drawSpot(ctx){
-    ctx.beginPath();
-    ctx.rect(this.posX, this.posY, this.width, this.height);
-    ctx.fillStyle = "#9ddfe1";
-    ctx.fill();
-    ctx.closePath();
+    DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, '#9ddfe1');
   };
 };

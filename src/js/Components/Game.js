@@ -1,5 +1,4 @@
 import Board from './Board/Board.js';
-import EventEmitter from '../EventEmitter.js';
 
 export default class Game {
     constructor() {
@@ -11,4 +10,4 @@ export default class Game {
         // this.board.startBoard();
         document.addEventListener('keydown',() => this.board.setFroggerMove(event));
     }
-}
+} 

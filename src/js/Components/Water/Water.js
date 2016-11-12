@@ -1,4 +1,5 @@
 import WaterService from './WaterService.js';
+import DrawFunctions from '../../Utilities/DrawFunctions.js';
 
 export default class Water{
   constructor(){
@@ -9,11 +10,7 @@ export default class Water{
   }
 
   drawWater(ctx){
-    ctx.beginPath();
-    ctx.rect(this.posX, this.posY, this.width, this.height);
-    ctx.fillStyle = "blue";
-    ctx.fill();
-    ctx.closePath();
+    DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'blue');
   }
 
 }
