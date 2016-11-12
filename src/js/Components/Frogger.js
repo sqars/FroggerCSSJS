@@ -4,6 +4,7 @@ import BoardService from './Board/BoardService.js';
 
 import CheckArea from '../Utilities/CheckArea.js';
 import CollisionDetection from '../Utilities/CollisionDetection.js';
+import SailService from '../Utilities/SailService.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -18,6 +19,8 @@ export default class Frogger extends MovingObject {
         this.direction = null;
         this.moving = false;
         this.movingCount = 0;
+        this.sailing = false;
+        this.sailingObj = null;
         this.speed = 5;
         this.lives = 3;
     };
@@ -67,12 +70,14 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
     }
 
-    checkCollisions(board, grass, cars, turtles, winningSpots) {
+    checkCollisions(board, grass, cars, turtles, woods, winningSpots) {
         const {
             checkIfOutOfMapArea,
             checkIfLastLineArea,
             checkIfCarArea,
-            checkIfTurtleArea
+            checkIfTurtleArea,
+            checkIfWoodArea,
+            checkIfWaterArea
         } = CheckArea;
 
         const {
@@ -107,19 +112,41 @@ export default class Frogger extends MovingObject {
 
         };
 
-        let movingObjsCollisions = [];
+        let objsCollisions = [];
 
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
-            movingObjsCollisions.push(findCollision(this, cars));
+            objsCollisions.push(findCollision(this, cars));
         }
 
         if (checkIfTurtleArea(this)) { // check collision with turtles only if frogger is in 'turtle' area
-            movingObjsCollisions.push(findCollision(this, turtles));
+            const sailingTurtle = findCollision(this, turtles);
+            if (sailingTurtle) {
+                this.sailing = true;
+                this.sailingObj = sailingTurtle;
+                if (!this.moving) {
+                    SailService.sail(this, sailingTurtle);
+                }
+            } else {
+                this.sailing = false;
+            }
         }
 
-        for (let i = 0; i < movingObjsCollisions.length; i++) {
-            if (movingObjsCollisions[i]) {
-                console.log('kolizja');
+        if (checkIfWoodArea(this)) { // check collision with turtles only if frogger is in 'woods' area
+            const sailingWood = findCollision(this, woods);
+            if (sailingWood) {
+                this.sailing = true;
+                this.sailingObj = sailingWood;
+                if (!this.moving) {
+                    SailService.sail(this, sailingWood);
+                }
+            } else {
+                this.sailing = false;
+            }
+        }
+
+        for (let i = 0; i < objsCollisions.length; i++) {
+            if (objsCollisions[i]) {
+                // console.log('kolizja');
                 break;
             }
         };
@@ -128,15 +155,17 @@ export default class Frogger extends MovingObject {
 
     move() {
         if (this.moving) {
+            let sailSpeed = 0;
+            this.sailing ? sailSpeed = this.sailingObj.speed : false;
             switch (this.direction) {
                 case 'left':
-                    this.posX -= this.speed;
+                    this.posX -= this.speed + sailSpeed;
                     break;
                 case 'up':
                     this.posY -= this.speed;
                     break;
                 case 'right':
-                    this.posX += this.speed;
+                    this.posX += this.speed - sailSpeed;
                     break;
                 case 'down':
                     this.posY += this.speed;

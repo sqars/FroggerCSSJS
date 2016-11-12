@@ -37,6 +37,14 @@ const CheckArea = {
         result = true;
       }
       return result;
+    },
+
+    checkIfWaterArea: (frogger) =>{
+      let result = false;
+      if(frogger.posY <= 300 && frogger.posY >= 50){
+        result = true;
+      }
+      return result;
     }
 }
 
