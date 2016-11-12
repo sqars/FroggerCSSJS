@@ -1,5 +1,6 @@
 import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
+import BoardService from './Board/BoardService.js';
 
 export default class Frogger extends MovingObject {
     constructor(board, posX, posY, direction, lives) {
@@ -8,67 +9,90 @@ export default class Frogger extends MovingObject {
         this.width = 50;
         this.posX = board.width * 0.5;
         this.posY = board.height - this.height;
-        this.direction = 'up';
-        this.lives = 3;
+        this.nextPosX = null;
+        this.nextPosY = null;
+        this.direction = null;
+        this.moving = false;
         this.movingCount = 0;
-        this.speed = 2;
+        this.speed = 5;
+        this.lives = 3;
     };
 
     drawFrogger(ctx) {
         DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'green');
     }
 
+    triggerMove(event){
+      if(!this.moving){
+        this.setDirection(event);
+        this.calculateFroggerNextPos();
+        this.moving = true;
+      }
+    }
+
     setDirection(event) {
-        let result = false;
         switch (event.which) {
             case 37:
                 this.direction = 'left';
-                result = true;
-                this.posX - 50 < 0 ? result = false : false;
                 break;
             case 38:
                 this.direction = 'up';
-                result = true;
-                this.posY - 50 < 0 ? result = false : false;
                 break;
             case 39:
                 this.direction = 'right';
-                result = true;
-                this.posX + 50 > 650 ? result = false : false;
                 break;
             case 40:
                 this.direction = 'down';
-                result = true;
-                this.posY + 50 > 600 ? result = false : false;
                 break;
             default:
-                result = false;
+                false;
         };
-        return result;
     }
 
-    move(direction) {
-        let result = false;
-        let speed = this.speed;
-        switch (direction) {
-            case 'left':
-                this.posX -= speed;
-                break;
-            case 'up':
-                this.posY -= speed;
-                break;
-            case 'right':
-                this.posX += speed;
-                break;
-            case 'down':
-                this.posY += speed;
-                break;
-            default:
-                break;
-        };
-        this.movingCount++;
-        this.movingCount < 25 ? result = true : this.movingCount = 0;
-        return result;
+    calculateFroggerNextPos(){
+      switch (this.direction) {
+          case 'left':
+              this.nextPosX = this.posX - 50;
+              break;
+          case 'up':
+              this.nextPosY = this.posY - 50;
+              break;
+          case 'right':
+              this.nextPosX = this.posX + 50;
+              break;
+          case 'down':
+              this.nextPosY = this.posX + 50;
+              break;
+          default:
+              this.nextPosY = null;
+              this.nextPosX = null;
+      };
+    }
+
+    move() {
+        if(this.moving){
+          switch (this.direction) {
+              case 'left':
+                  this.posX -= this.speed;
+                  break;
+              case 'up':
+                  this.posY -= this.speed;
+                  break;
+              case 'right':
+                  this.posX += this.speed;
+                  break;
+              case 'down':
+                  this.posY += this.speed;
+                  break;
+              default:
+                  break;
+          };
+          this.movingCount++;
+          if(this.movingCount >= 50 / this.speed){
+            this.movingCount = 0;
+            this.moving = false;
+          };
+        }
     }
 
 }

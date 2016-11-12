@@ -6,10 +6,12 @@ const BoardService = {
     })
   },
 
-  checkCollision(frogger, elements){
-    let froggerPos = frogger.getPosition();
+  checkOutOfMap(frogger, board){
     let result = false;
-    elements.forEach(elem => elem.getPosition() === froggerPos ? result = froggerPos : false);
+    if( frogger.nextPosX >= board.width || frogger.nextPosX < 0 ||
+        frogger.nextPosY >= board.height || frogger.nextPosY < 0){
+      result = true;
+    }
     return result;
   },
 
