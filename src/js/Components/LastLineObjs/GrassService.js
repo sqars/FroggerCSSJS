@@ -6,17 +6,6 @@ const GrassService = {
       ...createSmallGrass(),
       ...createBigGrass()
     ];
-  },
-
-  checkCollision: (frogger, grass) =>{
-    let result = false;
-    grass.forEach((grass) =>{
-      if(frogger.posX > grass.posX && frogger.posX < grass.posX + grass.width && frogger.posY < grass.posY + grass.height){
-        frogger.posY += frogger.speed;
-        result = true
-      }
-    });
-    return result;
   }
 };
 

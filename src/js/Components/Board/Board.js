@@ -35,10 +35,6 @@ export default class Board {
         this.woods.forEach(wood => wood.move(this.woods));
         this.frogger.drawFrogger(this.context);
         this.moveFrogger();
-        this.frogger.speed = 2;
-        WoodService.checkSail(this.frogger, this.woods, this.froggerMoving);
-        TurtleService.checkSail(this.frogger, this.turtles, this.froggerMoving);
-        WinningSpotService.checkWin(this.frogger, this.winningSpots);
         requestAnimationFrame(this.setBoard.bind(this));
     }
 
@@ -55,13 +51,6 @@ export default class Board {
       } else{
         this.froggerMoving = false;
       }
-
-    }
-
-    checkCollision() {
-        this.cars.forEach((car) => {
-            Math.abs(car.posX - this.frogger.posX) < car.width && car.posY === this.frogger.posY ? console.log('collision') : false;
-        })
     }
 
 }

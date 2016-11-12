@@ -9,14 +9,6 @@ const WinningSpotService = {
       spotsArr.push(spot);
     }
     return spotsArr;
-  },
-
-  checkWin: (frogger, winningSpots) =>{
-    winningSpots.forEach((spot) =>{
-      if(frogger.posX > spot.posX && frogger.posX < spot.posX + spot.width && frogger.posY === spot.posY){
-        frogger.posX = spot.posX + 11.11;
-      }
-    });
   }
 };
 

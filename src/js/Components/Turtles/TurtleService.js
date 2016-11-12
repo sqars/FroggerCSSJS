@@ -58,23 +58,6 @@ const TurtleService = {
                 return 150;
                 break;
         }
-    },
-
-    checkSail: (frogger, turtles, froggerMoving) => {
-        turtles.forEach((turtle) => {
-            const checker = turtle.posX - frogger.posX;
-            if (Math.abs(checker) < turtle.width && checker < 15 && turtle.posY === frogger.posY) {
-                if (froggerMoving) {
-                  frogger.direction === 'left' ? frogger.speed = 3 : frogger.speed = 1;
-                } else {
-                    if (turtle.width > 50) {
-                        frogger.posX = turtle.posX + Math.round(Math.abs(checker) / 50) * 50;
-                    } else {
-                        frogger.posX = turtle.posX;
-                    }
-                }
-            }
-        });
     }
 
 }
