@@ -175,14 +175,14 @@ export default class Frogger extends MovingObject {
                     break;
             };
             this.movingCount++;
-            if (this.movingCount >= 50 / this.speed) {
+            if (this.movingCount >= 50 / this.speed) { // end of movement
                 this.movingCount = 0;
                 this.moving = false;
                 if(checkIfOutOfWaterArea(this)){//check if frogger moves out of water(moves down turtle)
-                  this.posX = 50 * Math.round(this.posX / 50);
+                  this.posX = 50 * Math.round(this.posX / 50); // fix frogger position when leaving turtle
                 }
             };
-        }
+        };
     };
 
 }
