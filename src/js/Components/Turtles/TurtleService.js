@@ -21,7 +21,7 @@ const TurtleService = {
                 Math.abs(checkedTurtle.posX - posX) < checkedTurtle.width + 50 ? available = false : false;
             });
             if (available) {
-                let turtle = new Turtle(posX, line, 1, diving);
+                let turtle = new Turtle(posX, line, diving);
                 turtles.push(turtle);
                 placed++;
                 attempts = 0;
@@ -30,7 +30,7 @@ const TurtleService = {
             }
 
             if (attempts > 15) {
-                let turtle = new Turtle(-500, line, 1, diving);
+                let turtle = new Turtle(-500, line, diving);
                 turtles.push(turtle);
                 placed++;
             }

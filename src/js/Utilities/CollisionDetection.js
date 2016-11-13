@@ -14,9 +14,9 @@ const CollisionDetection = {
 
 
         if (
-            ((froggerRightSide > objLeftSide && froggerRightSide <= objRightSide) ||
-                (froggerLeftSide < objRightSide && froggerLeftSide >= objLeftSide)) &&
-            (froggerTopSide < objBottomSide && froggerBottomSide > objTopSide)
+            ( (froggerRightSide > objLeftSide && froggerRightSide <= objRightSide) ||
+              (froggerLeftSide < objRightSide && froggerLeftSide >= objLeftSide)) &&
+              (froggerTopSide < objBottomSide && froggerBottomSide > objTopSide)
         ) {
             result = true;
         };

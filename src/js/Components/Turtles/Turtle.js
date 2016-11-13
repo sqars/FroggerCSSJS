@@ -1,15 +1,16 @@
 import MovingObject from '../MovingObject.js';
 import TurtleService from './TurtleService.js';
 import DrawFunctions from '../../Utilities/DrawFunctions.js';
+import Generators from '../../Utilities/Generators.js';
 
 export default class Turtle extends MovingObject {
-    constructor(posX, line, speed, diving) {
+    constructor(posX, line, diving) {
         super(posX);
         this.line = line;
-        this.speed = speed;
         this.height = 50;
         this.width = TurtleService.generateWidth(line);
         this.posY = TurtleService.generateYPos(line);
+        this.speed = Generators.generateSpeed(this.width);
         this.diving = diving;
         this.dived = false;
         this.direction = 'left';

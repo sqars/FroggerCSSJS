@@ -15,7 +15,7 @@ const CarService = {
                 Math.abs(checkedCar.posX - posX) < checkedCar.width + 50 ? available = false : false;
             });
             if (available) {
-                let car = new Car(posX, line, 1);
+                let car = new Car(posX, line);
                 cars.push(car);
                 placed++;
             } else {
@@ -23,7 +23,7 @@ const CarService = {
             }
 
             if (attempts > 15) {
-                let car = new Car(-500, line, 1);
+                let car = new Car(-500, line);
                 cars.push(car);
                 placed++;
             }

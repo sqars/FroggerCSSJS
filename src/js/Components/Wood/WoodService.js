@@ -14,7 +14,7 @@ const WoodService = {
                     Math.abs(checkedWood.posX - posX) < checkedWood.width + 50 ? available = false : false;
                 });
                 if (available) {
-                    let wood = new Wood(posX, line, 1);
+                    let wood = new Wood(posX, line);
                     woods.push(wood);
                     placed++;
                     attempts = 0;
@@ -23,7 +23,7 @@ const WoodService = {
                 }
 
                 if (attempts > 15) {
-                    let wood = new Wood(-500, line, 1);
+                    let wood = new Wood(-500, line);
                     woods.push(wood);
                     placed++;
                 }

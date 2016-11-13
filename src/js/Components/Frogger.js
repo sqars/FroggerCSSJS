@@ -115,7 +115,7 @@ export default class Frogger extends MovingObject {
 
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
             if(findCollision(this, cars)){
-              console.log('hit by car');
+              // console.log('hit by car');
             }
         }
 
@@ -146,7 +146,7 @@ export default class Frogger extends MovingObject {
         }
 
         if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
-            console.log('drowned');
+            // console.log('drowned');
         }
 
     };
@@ -157,7 +157,14 @@ export default class Frogger extends MovingObject {
         } = CheckArea;
         if (this.moving) {
             let sailSpeed = 0;
-            this.sailing ? sailSpeed = this.sailingObj.speed : false;
+            let froggerSpeed = this.speed;
+            if(this.sailing){
+              if(this.sailingObj.direction === 'left'){
+                sailSpeed = this.sailingObj.speed;
+              } else if (this.sailingObj.direction === 'right') {
+                sailSpeed = -this.sailingObj.speed;
+              }
+            }
             switch (this.direction) {
                 case 'left':
                     this.posX -= this.speed + sailSpeed;
