@@ -39,7 +39,6 @@ const TurtleService = {
                 line = 2;
             }
         }
-        console.log(turtles);
         return turtles;
     },
 

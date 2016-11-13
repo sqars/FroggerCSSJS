@@ -34,6 +34,18 @@ const CollisionDetection = {
         return result;
     },
 
+    findTurtleCollision: (frogger, turtlesArr) =>{ // we need this to filter diving turtles
+      let result = false;
+      let notDivingTurtles = turtlesArr.filter(turtle => !turtle.dived);
+      for (let i = 0; i < notDivingTurtles.length; i++) {
+          if (CollisionDetection.checkCollision(frogger, notDivingTurtles[i])) {
+              result = notDivingTurtles[i];
+              break;
+          }
+      };
+      return result;
+    },
+
     checkOutOfMap: (frogger, board) => {
         let result = false;
         if (frogger.posX > board.width - 50 || frogger.posX < 0 ||

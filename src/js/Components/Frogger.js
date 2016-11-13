@@ -82,7 +82,8 @@ export default class Frogger extends MovingObject {
 
         const {
             findCollision,
-            checkOutOfMap
+            checkOutOfMap,
+            findTurtleCollision
         } = CollisionDetection;
 
         if (this.moving) {
@@ -112,14 +113,14 @@ export default class Frogger extends MovingObject {
 
         };
 
-        let objsCollisions = [];
-
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
-            objsCollisions.push(findCollision(this, cars));
+            if(findCollision(this, cars)){
+              console.log('hit by car');
+            }
         }
 
         if (checkIfTurtleArea(this)) { // check collision with turtles only if frogger is in 'turtle' area
-            const sailingTurtle = findCollision(this, turtles);
+            const sailingTurtle = findTurtleCollision(this, turtles);
             if (sailingTurtle) {
                 this.sailing = true;
                 this.sailingObj = sailingTurtle;
@@ -144,17 +145,16 @@ export default class Frogger extends MovingObject {
             }
         }
 
-        for (let i = 0; i < objsCollisions.length; i++) {
-            if (objsCollisions[i]) {
-                // console.log('kolizja');
-                break;
-            }
-        };
+        if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
+            console.log('drowned');
+        }
 
     };
 
     move() {
-      const { checkIfOutOfWaterArea } = CheckArea;
+        const {
+            checkIfOutOfWaterArea
+        } = CheckArea;
         if (this.moving) {
             let sailSpeed = 0;
             this.sailing ? sailSpeed = this.sailingObj.speed : false;
@@ -178,8 +178,8 @@ export default class Frogger extends MovingObject {
             if (this.movingCount >= 50 / this.speed) { // end of movement
                 this.movingCount = 0;
                 this.moving = false;
-                if(checkIfOutOfWaterArea(this)){//check if frogger moves out of water(moves down turtle)
-                  this.posX = 50 * Math.round(this.posX / 50); // fix frogger position when leaving turtle
+                if (checkIfOutOfWaterArea(this)) { //check if frogger moves out of water(moves down turtle)
+                    this.posX = 50 * Math.round(this.posX / 50); // fix frogger position when leaving turtle
                 }
             };
         };
