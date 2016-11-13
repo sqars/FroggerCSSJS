@@ -1,6 +1,5 @@
 import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
-import BoardService from './Board/BoardService.js';
 
 import CheckArea from '../Utilities/CheckArea.js';
 import CollisionDetection from '../Utilities/CollisionDetection.js';
@@ -77,7 +76,8 @@ export default class Frogger extends MovingObject {
             checkIfCarArea,
             checkIfTurtleArea,
             checkIfWoodArea,
-            checkIfWaterArea
+            checkIfWaterArea,
+            checkIfOutOfWaterArea
         } = CheckArea;
 
         const {
@@ -154,6 +154,7 @@ export default class Frogger extends MovingObject {
     };
 
     move() {
+      const { checkIfOutOfWaterArea } = CheckArea;
         if (this.moving) {
             let sailSpeed = 0;
             this.sailing ? sailSpeed = this.sailingObj.speed : false;
@@ -177,6 +178,9 @@ export default class Frogger extends MovingObject {
             if (this.movingCount >= 50 / this.speed) {
                 this.movingCount = 0;
                 this.moving = false;
+                if(checkIfOutOfWaterArea(this)){//check if frogger moves out of water(moves down turtle)
+                  this.posX = 50 * Math.round(this.posX / 50);
+                }
             };
         }
     };

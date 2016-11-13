@@ -34,7 +34,7 @@ export default class Board {
       this.grass.forEach(grass => grass.drawGrass(this.context)); // draw Grass
       this.winningSpots.forEach(spot => spot.drawSpot(this.context)); // draw winningSpots
       this.cars.forEach(car => car.drawCar(this.context)); // draw Cars
-      this.turtles.forEach(turtle => turtle.drawTurtle(this.context)); // draw Turtles
+      this.turtles.forEach(turtle => !turtle.diving ? turtle.drawTurtle(this.context) : false); // draw Turtles
       this.woods.forEach(wood => wood.drawWood(this.context)); // draw Woods
       this.frogger.drawFrogger(this.context); // draw Frogger
 

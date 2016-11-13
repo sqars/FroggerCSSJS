@@ -45,6 +45,14 @@ const CheckArea = {
         result = true;
       }
       return result;
+    },
+
+    checkIfOutOfWaterArea: (frogger) =>{
+      let result = false;
+      if(frogger.posY <= 350 && frogger.posY >= 300){
+        result = true;
+      }
+      return result;
     }
 }
 
