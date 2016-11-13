@@ -12,7 +12,7 @@ export default class Board {
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
         this.water = new Water();
-        this.frogger = new Frogger(this.board);
+        this.frogger = new Frogger();
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
@@ -44,6 +44,6 @@ export default class Board {
         this.turtles.forEach(turtle => turtle.move(this.turtles)); // move Turtles
         this.woods.forEach(wood => wood.move(this.woods)); // move Woods
         this.frogger.move();
-        this.frogger.checkCollisions(this.board, this.grass, this.cars, this.turtles, this.woods, this.winningSpots);
+        this.frogger.handleCollisions(this.board, this.grass, this.cars, this.turtles, this.woods, this.winningSpots, this.context);
     }
 }

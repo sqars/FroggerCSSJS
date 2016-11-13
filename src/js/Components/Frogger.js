@@ -2,16 +2,17 @@ import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
 
 import CheckArea from '../Utilities/CheckArea.js';
+import EventEmitter from '../Utilities/EventEmitter.js';
 import CollisionDetection from '../Utilities/CollisionDetection.js';
 import SailService from '../Utilities/SailService.js';
 
 export default class Frogger extends MovingObject {
-    constructor(board, posX, posY, direction, lives) {
+    constructor(posX, posY, direction, lives) {
         super();
         this.height = 50;
         this.width = 50;
-        this.posX = board.width * 0.5;
-        this.posY = board.height - this.height;
+        this.posX = 350;
+        this.posY = 600;
         this.prevPosX = null;
         this.prevPosY = null;
         this.prevDirection = null;
@@ -69,7 +70,7 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
     }
 
-    checkCollisions(board, grass, cars, turtles, woods, winningSpots) {
+    handleCollisions(board, grass, cars, turtles, woods, winningSpots, context) {
         const {
             checkIfOutOfMapArea,
             checkIfLastLineArea,
@@ -92,9 +93,14 @@ export default class Frogger extends MovingObject {
 
             if (checkIfLastLineArea(this)) { // check collision on lastline only if frogger is on lastline area
                 const winningSpot = findCollision(this, winningSpots);
-                if (winningSpot) {
+                if (winningSpot && !winningSpot.taken) {
                     this.posX = winningSpot.posX + 11.11;
-                    //TODO: add function for reseting frogger
+                    if (this.posY <= 5) {
+                        winningSpot.taken = true;
+                        this.resetFrogger();
+                    }
+                } else if (winningSpot.taken) {
+                    blockersCollisions.push(true);
                 } else {
                     blockersCollisions.push(findCollision(this, grass));
                 }
@@ -114,8 +120,8 @@ export default class Frogger extends MovingObject {
         };
 
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
-            if(findCollision(this, cars)){
-              // console.log('hit by car');
+            if (findCollision(this, cars)) {
+                // this.resetFrogger();
             }
         }
 
@@ -157,13 +163,12 @@ export default class Frogger extends MovingObject {
         } = CheckArea;
         if (this.moving) {
             let sailSpeed = 0;
-            let froggerSpeed = this.speed;
-            if(this.sailing){
-              if(this.sailingObj.direction === 'left'){
-                sailSpeed = this.sailingObj.speed;
-              } else if (this.sailingObj.direction === 'right') {
-                sailSpeed = -this.sailingObj.speed;
-              }
+            if (this.sailing) {
+                if (this.sailingObj.direction === 'left') {
+                    sailSpeed = this.sailingObj.speed;
+                } else if (this.sailingObj.direction === 'right') {
+                    sailSpeed = -this.sailingObj.speed;
+                }
             }
             switch (this.direction) {
                 case 'left':
@@ -190,6 +195,24 @@ export default class Frogger extends MovingObject {
                 }
             };
         };
+    };
+
+    waitForEndMoving(frogger) {
+        return new Promise(function(resolve, reject) {
+            if (!frogger.moving) {
+                resolve();
+            }
+        });
+    };
+
+    resetFrogger() {
+        this.posX = 350;
+        this.posY = 600;
+        this.direction = null;
+        this.moving = false;
+        this.movingCount = 0;
+        this.sailing = false;
+        this.sailingObj = null;
     };
 
 }
