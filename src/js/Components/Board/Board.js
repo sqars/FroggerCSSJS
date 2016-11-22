@@ -7,13 +7,15 @@ import GrassService from '../LastLineObjs/GrassService.js';
 import WinningSpotService from '../LastLineObjs/WinningSpotService.js';
 import DrawFunctions from '../../Utilities/DrawFunctions.js';
 import EventEmitter from '../../Utilities/EventEmitter.js';
+import InfoBar from '../InfoBar/InfoBar.js';
 
 export default class Board {
     constructor() {
         this.emitter = new EventEmitter();
-        this.level = 1;
+        this.gameLevel = 1;
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
+        this.infoBar = new InfoBar();
         this.water = new Water();
         this.grass = GrassService.createGrass();
         this.frogger = new Frogger(this.emitter);
@@ -38,6 +40,7 @@ export default class Board {
 
     drawAll() {
         this.context.clearRect(0, 0, this.board.width, this.board.height); // clear board
+        this.infoBar.drawInfoBar(this.context, this.gameLevel, this.frogger.lives);
         this.water.drawWater(this.context); // draw Water
         this.grass.forEach(grass => grass.drawGrass(this.context)); // draw Grass
         this.winningSpots.forEach(spot => spot.drawSpot(this.context)); // draw winningSpots
@@ -58,14 +61,14 @@ export default class Board {
     }
 
     resetBoard(){
-      this.cars = CarService.createCars(this.level);
-      this.turtles = TurtleService.createTurtles(this.level);
-      this.woods = WoodService.createWood(this.level);
+      this.cars = CarService.createCars(this.gameLevel);
+      this.turtles = TurtleService.createTurtles(this.gameLevel);
+      this.woods = WoodService.createWood(this.gameLevel);
       this.winningSpots = WinningSpotService.createWinningSpots();
     }
 
     levelUp() {
-        this.level++;
+        this.gameLevel++;
         this.resetBoard();
     }
 }

@@ -11,8 +11,3 @@ const SailService = {
 }
 
 export default SailService;
-
-// |400|450|500|
-//            |530|
-
-// 530 - 400 = 130 ~ 150
