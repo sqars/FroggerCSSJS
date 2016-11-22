@@ -4,13 +4,13 @@ import DrawFunctions from '../../Utilities/DrawFunctions.js';
 import Generators from '../../Utilities/Generators.js';
 
 export default class Wood extends MovingObject {
-    constructor(posX, line) {
+    constructor(posX, line, level) {
         super(posX);
         this.line = line;
         this.height = 50;
         this.width = WoodService.generateWidth(line)
         this.posY = WoodService.generateYPos(line);
-        this.speed = Generators.generateSpeed(this.width);
+        this.speed = Generators.generateSpeed(this.width, level);
         this.direction = 'right';
     }
 

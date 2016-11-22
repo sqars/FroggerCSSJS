@@ -1,12 +1,12 @@
 import Wood from './Wood.js';
 
 const WoodService = {
-        createWood: () => {
+        createWood: (level) => {
             let woods = [];
             let placed = 0;
             let line = 1;
             let attempts = 0;
-            while (placed < 8) {
+            while (placed <= 7) {
                 let posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
                 let available = true;
                 let filteredLine = woods.filter(wood => wood.line === line);
@@ -14,7 +14,7 @@ const WoodService = {
                     Math.abs(checkedWood.posX - posX) < checkedWood.width + 50 ? available = false : false;
                 });
                 if (available) {
-                    let wood = new Wood(posX, line);
+                    let wood = new Wood(posX, line, level);
                     woods.push(wood);
                     placed++;
                     attempts = 0;
@@ -23,7 +23,7 @@ const WoodService = {
                 }
 
                 if (attempts > 15) {
-                    let wood = new Wood(-500, line);
+                    let wood = new Wood(-500, line, level);
                     woods.push(wood);
                     placed++;
                 }

@@ -99,14 +99,14 @@ export default class Frogger extends MovingObject {
                     if (this.posY <= 5) {
                         winningSpot.taken = true;
                         let checkLevelComplete = winningSpots.filter(spot => !spot.taken);
-                        if (checkLevelComplete.length == 0) {
+                        if (checkLevelComplete.length === 4) {
                             this.emitter.emit('levelComplete', null);
                         }
                         this.resetFrogger();
                     }
                 } else if (winningSpot.taken) {
                     blockersCollisions.push(true);
-                } else { 
+                } else {
                     blockersCollisions.push(findCollision(this, grass));
                 }
             }

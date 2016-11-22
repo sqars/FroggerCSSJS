@@ -2,7 +2,7 @@ import Turtle from './Turtle.js';
 
 const TurtleService = {
 
-    createTurtles: () => {
+    createTurtles: (level) => {
         let turtles = [];
         let placed = 0;
         let line = 1;
@@ -21,7 +21,7 @@ const TurtleService = {
                 Math.abs(checkedTurtle.posX - posX) < checkedTurtle.width + 50 ? available = false : false;
             });
             if (available) {
-                let turtle = new Turtle(posX, line, diving);
+                let turtle = new Turtle(posX, line, diving, level);
                 turtles.push(turtle);
                 placed++;
                 attempts = 0;
@@ -30,7 +30,7 @@ const TurtleService = {
             }
 
             if (attempts > 15) {
-                let turtle = new Turtle(-500, line, diving);
+                let turtle = new Turtle(-500, line, diving, level);
                 turtles.push(turtle);
                 placed++;
             }

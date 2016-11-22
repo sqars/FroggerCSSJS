@@ -1,7 +1,7 @@
 const Generators = {
-  generateSpeed: (width) => {
-    return Math.sqrt(width * 1 / 100);
-  }
+    generateSpeed: (width, level) => {
+        return Math.sqrt(width * 1/100) + Math.sqrt(Math.pow(level, 3)/width);
+    }
 }
 
 export default Generators;

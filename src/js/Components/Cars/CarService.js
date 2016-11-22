@@ -2,7 +2,7 @@ import Car from './Car.js';
 
 const CarService = {
 
-    createCars: () => {
+    createCars: (level) => {
         let cars = [];
         let placed = 0;
         let line = 1
@@ -15,7 +15,7 @@ const CarService = {
                 Math.abs(checkedCar.posX - posX) < checkedCar.width + 50 ? available = false : false;
             });
             if (available) {
-                let car = new Car(posX, line);
+                let car = new Car(posX, line, level);
                 cars.push(car);
                 placed++;
             } else {
@@ -23,7 +23,7 @@ const CarService = {
             }
 
             if (attempts > 15) {
-                let car = new Car(-500, line);
+                let car = new Car(-500, line, level);
                 cars.push(car);
                 placed++;
             }

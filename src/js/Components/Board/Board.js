@@ -11,20 +11,20 @@ import EventEmitter from '../../Utilities/EventEmitter.js';
 export default class Board {
     constructor() {
         this.emitter = new EventEmitter();
+        this.level = 1;
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
         this.water = new Water();
-        this.frogger = new Frogger(this.emitter);
-        this.cars = CarService.createCars();
-        this.turtles = TurtleService.createTurtles();
-        this.woods = WoodService.createWood();
         this.grass = GrassService.createGrass();
-        this.winningSpots = WinningSpotService.createWinningSpots();
-        this.level = 1;
+        this.frogger = new Frogger(this.emitter);
+        this.winningSpots = [];
+        this.cars = [];
+        this.turtles = [];
+        this.woods = [];
+
         this.init = () => {
-            this.emitter.subscribe('levelComplete', () => {
-                this.levelUp();
-            });
+            this.resetBoard();
+            this.emitter.subscribe('levelComplete', this.levelUp.bind(this));
         };
 
         this.init();
@@ -57,7 +57,15 @@ export default class Board {
         this.frogger.handleCollisions(this.board, this.grass, this.cars, this.turtles, this.woods, this.winningSpots, this.context);
     }
 
+    resetBoard(){
+      this.cars = CarService.createCars(this.level);
+      this.turtles = TurtleService.createTurtles(this.level);
+      this.woods = WoodService.createWood(this.level);
+      this.winningSpots = WinningSpotService.createWinningSpots();
+    }
+
     levelUp() {
         this.level++;
+        this.resetBoard();
     }
 }
