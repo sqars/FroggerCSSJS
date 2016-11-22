@@ -7,7 +7,7 @@ import CollisionDetection from '../Utilities/CollisionDetection.js';
 import SailService from '../Utilities/SailService.js';
 
 export default class Frogger extends MovingObject {
-    constructor(posX, posY, direction, lives) {
+    constructor(emitter) {
         super();
         this.height = 50;
         this.width = 50;
@@ -23,6 +23,7 @@ export default class Frogger extends MovingObject {
         this.sailingObj = null;
         this.speed = 5;
         this.lives = 3;
+        this.emitter = emitter;
     };
 
     drawFrogger(ctx) {
@@ -97,11 +98,15 @@ export default class Frogger extends MovingObject {
                     this.posX = winningSpot.posX + 11.11;
                     if (this.posY <= 5) {
                         winningSpot.taken = true;
+                        let checkLevelComplete = winningSpots.filter(spot => !spot.taken);
+                        if (checkLevelComplete.length == 0) {
+                            this.emitter.emit('levelComplete', null);
+                        }
                         this.resetFrogger();
                     }
                 } else if (winningSpot.taken) {
                     blockersCollisions.push(true);
-                } else {
+                } else { 
                     blockersCollisions.push(findCollision(this, grass));
                 }
             }
@@ -152,7 +157,7 @@ export default class Frogger extends MovingObject {
         }
 
         if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
-            // console.log('drowned');
+            // this.resetFrogger();
         }
 
     };

@@ -6,18 +6,28 @@ import WoodService from '../Wood/WoodService.js';
 import GrassService from '../LastLineObjs/GrassService.js';
 import WinningSpotService from '../LastLineObjs/WinningSpotService.js';
 import DrawFunctions from '../../Utilities/DrawFunctions.js';
+import EventEmitter from '../../Utilities/EventEmitter.js';
 
 export default class Board {
     constructor() {
+        this.emitter = new EventEmitter();
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
         this.water = new Water();
-        this.frogger = new Frogger();
+        this.frogger = new Frogger(this.emitter);
         this.cars = CarService.createCars();
         this.turtles = TurtleService.createTurtles();
         this.woods = WoodService.createWood();
         this.grass = GrassService.createGrass();
         this.winningSpots = WinningSpotService.createWinningSpots();
+        this.level = 1;
+        this.init = () => {
+            this.emitter.subscribe('levelComplete', () => {
+                this.levelUp();
+            });
+        };
+
+        this.init();
     }
 
     setBoard() {
@@ -45,5 +55,9 @@ export default class Board {
         this.woods.forEach(wood => wood.move(this.woods)); // move Woods
         this.frogger.move();
         this.frogger.handleCollisions(this.board, this.grass, this.cars, this.turtles, this.woods, this.winningSpots, this.context);
+    }
+
+    levelUp() {
+        this.level++;
     }
 }

@@ -1,6 +1,6 @@
 const Generators = {
   generateSpeed: (width) => {
-    return Math.sqrt(width * 1 / 50);
+    return Math.sqrt(width * 1 / 100);
   }
 }
 
