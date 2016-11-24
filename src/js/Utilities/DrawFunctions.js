@@ -15,6 +15,7 @@ const DrawFunctions = {
 
   drawText: (ctx, fontFamily, fontSize, color, text, posX, posY) =>{
     ctx.font = fontSize + "px " + fontFamily;
+    ctx.fillStyle = color;
     ctx.fillText(text, posX, posY);
   }
 }

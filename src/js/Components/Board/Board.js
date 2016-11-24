@@ -8,6 +8,7 @@ import WinningSpotService from '../LastLineObjs/WinningSpotService.js';
 import DrawFunctions from '../../Utilities/DrawFunctions.js';
 import EventEmitter from '../../Utilities/EventEmitter.js';
 import InfoBar from '../InfoBar/InfoBar.js';
+import EndScreen from '../EndScreen/EndScreen.js';
 
 export default class Board {
     constructor() {
@@ -19,6 +20,7 @@ export default class Board {
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
         this.infoBar = new InfoBar();
+        this.endScreen = new EndScreen();
         this.water = new Water();
         this.grass = GrassService.createGrass();
         this.frogger = new Frogger(this.emitter);
@@ -35,7 +37,7 @@ export default class Board {
             }, 1000);
             this.emitter.subscribe('levelComplete', this.levelUp.bind(this));
             this.emitter.subscribe('updateScore', this.updateScore.bind(this));
-            this.emitter.subscribe('gameOver', this.gameOver.bind(this)); 
+            this.emitter.subscribe('gameOver', this.gameOver.bind(this));
         };
 
         this.init();
@@ -46,7 +48,7 @@ export default class Board {
         this.drawAll();
         this.moveAll();
       } else {
-
+        this.endScreen.drawEndScreen(this.context);
       }
         requestAnimationFrame(this.setBoard.bind(this));
     }
@@ -100,6 +102,16 @@ export default class Board {
     }
 
     gameOver(){
+      unsubscribeAll(this.emitter);
       this.game = false;
     }
+}
+
+function unsubscribeAll(emitter){
+  let unsubscribeAll = [
+    emitter.subscribe('levelComplete', null),
+    emitter.subscribe('updateScore', null),
+    emitter.subscribe('gameOver', null)
+  ];
+  unsubscribeAll.forEach(unsubscribe => unsubscribe());
 }

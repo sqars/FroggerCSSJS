@@ -157,8 +157,8 @@ export default class Frogger extends MovingObject {
         }
 
         if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
-            // this.resetFrogger();
-            // this.killFrogger();
+            this.resetFrogger();
+            this.killFrogger();
         }
 
     };
