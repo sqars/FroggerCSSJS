@@ -11,8 +11,11 @@ import InfoBar from '../InfoBar/InfoBar.js';
 
 export default class Board {
     constructor() {
+        this.game = true;
         this.emitter = new EventEmitter();
         this.gameLevel = 1;
+        this.gameScore = 0;
+        this.levelTimeout = 100;
         this.board = document.getElementById('canvas');
         this.context = this.board.getContext("2d");
         this.infoBar = new InfoBar();
@@ -26,21 +29,31 @@ export default class Board {
 
         this.init = () => {
             this.resetBoard();
+            setInterval(() =>{
+              this.levelTimeout--;
+              this.checkTimeOut();
+            }, 1000);
             this.emitter.subscribe('levelComplete', this.levelUp.bind(this));
+            this.emitter.subscribe('updateScore', this.updateScore.bind(this));
+            this.emitter.subscribe('gameOver', this.gameOver.bind(this)); 
         };
 
         this.init();
     }
 
     setBoard() {
+      if(this.game){
         this.drawAll();
         this.moveAll();
+      } else {
+
+      }
         requestAnimationFrame(this.setBoard.bind(this));
     }
 
     drawAll() {
         this.context.clearRect(0, 0, this.board.width, this.board.height); // clear board
-        this.infoBar.drawInfoBar(this.context, this.gameLevel, this.frogger.lives);
+        this.infoBar.drawInfoBar(this.context, this.gameLevel, this.frogger.lives, this.gameScore, this.levelTimeout);
         this.water.drawWater(this.context); // draw Water
         this.grass.forEach(grass => grass.drawGrass(this.context)); // draw Grass
         this.winningSpots.forEach(spot => spot.drawSpot(this.context)); // draw winningSpots
@@ -67,8 +80,26 @@ export default class Board {
       this.winningSpots = WinningSpotService.createWinningSpots();
     }
 
+    updateScore(){
+      this.gameScore += 50;
+    }
+
     levelUp() {
         this.gameLevel++;
+        this.levelTimeout = 100;
+        this.gameScore += 1500;
         this.resetBoard();
+    }
+
+    checkTimeOut(){
+      if(this.levelTimeout < 0){
+        this.levelTimeout = 5;
+        this.frogger.killFrogger();
+        this.frogger.resetFrogger();
+      }
+    }
+
+    gameOver(){
+      this.game = false;
     }
 }

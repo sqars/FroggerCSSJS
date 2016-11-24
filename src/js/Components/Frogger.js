@@ -158,6 +158,7 @@ export default class Frogger extends MovingObject {
 
         if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
             // this.resetFrogger();
+            // this.killFrogger();
         }
 
     };
@@ -193,6 +194,7 @@ export default class Frogger extends MovingObject {
             };
             this.movingCount++;
             if (this.movingCount >= 50 / this.speed) { // end of movement
+                this.direction == 'up' ? this.emitter.emit('updateScore', null) : false;
                 this.movingCount = 0;
                 this.moving = false;
                 if (checkIfOutOfWaterArea(this)) { //check if frogger moves out of water(moves down turtle)
@@ -209,6 +211,11 @@ export default class Frogger extends MovingObject {
             }
         });
     };
+
+    killFrogger(){
+      this.lives--;
+      this.lives < 0 ? this.emitter.emit('gameOver', null) : false;
+    }
 
     resetFrogger() {
         this.posX = 350;
