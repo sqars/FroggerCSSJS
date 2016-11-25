@@ -10,6 +10,7 @@ var uglify = require('gulp-uglify');
 var pump = require('pump');
 var cleanCSS = require('gulp-clean-css');
 var plumber = require('gulp-plumber');
+var connect = require('gulp-connect');
 
 gulp.task('sass', function() {
     return gulp.src('src/scss/main.scss')
@@ -20,6 +21,13 @@ gulp.task('sass', function() {
         }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('dist/css/'))
+});
+
+gulp.task('connect', function() {
+    connect.server({
+        root: '',
+        port: 4000
+    });
 });
 
 gulp.task('lint', function(){

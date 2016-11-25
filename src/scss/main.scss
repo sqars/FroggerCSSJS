@@ -6,8 +6,10 @@
 
 body{
   width: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
+@import 'elements/endScreen';
 @import 'variables';
 @import 'elements/board';
 @import 'elements/frogger';

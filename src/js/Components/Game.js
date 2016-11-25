@@ -1,4 +1,5 @@
 import Board from './Board/Board.js';
+import $ from 'jquery';
 
 export default class Game {
     constructor() {
@@ -7,6 +8,6 @@ export default class Game {
 
     startGame() {
         this.board.setBoard();
-        document.addEventListener('keydown',() => this.board.frogger.triggerMove(event));
+        $(document).on('keydown',() => this.board.frogger.triggerMove(event));
     }
 }

@@ -12,7 +12,6 @@ import EndScreen from '../EndScreen/EndScreen.js';
 
 export default class Board {
     constructor() {
-        this.game = true;
         this.emitter = new EventEmitter();
         this.gameLevel = 1;
         this.gameScore = 0;
@@ -44,12 +43,8 @@ export default class Board {
     }
 
     setBoard() {
-      if(this.game){
         this.drawAll();
         this.moveAll();
-      } else {
-        this.endScreen.drawEndScreen(this.context);
-      }
         requestAnimationFrame(this.setBoard.bind(this));
     }
 
@@ -103,7 +98,7 @@ export default class Board {
 
     gameOver(){
       unsubscribeAll(this.emitter);
-      this.game = false;
+      this.endScreen.showGameOverScreen(this.gameScore);
     }
 }
 
