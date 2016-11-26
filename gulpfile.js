@@ -31,7 +31,7 @@ gulp.task('connect', function() {
 });
 
 gulp.task('lint', function(){
-  return gulp.src('src/js/app.js')
+  return gulp.src('src/js/**/*.js')
   .pipe(jshint({esversion: 6}))
   .pipe(jshint.reporter('default'));
 });

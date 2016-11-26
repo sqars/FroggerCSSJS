@@ -24,8 +24,10 @@ export default class MovingObject {
                             attempts++;
                         }
                     });
-                    attempts >=15 ? this.posX = 1400 : false;
-                };
+                    if (attempts >= 15) {
+                        this.posX = 1400;
+                    }
+                }
                 this.posX -= this.speed;
                 break;
             case 'right':
@@ -42,22 +44,22 @@ export default class MovingObject {
                             attempts++;
                         }
                     });
-                    attempts >=15 ? this.posX = -1000 : false;
-                };
+                    if (attempts >= 15) {
+                        this.posX = -1000;
+                    }
+                }
                 this.posX += this.speed;
                 break;
             default:
                 break;
-        };
-    };
+        }
+    }
 
     checkCollision(obj) {
-        let result = false;
-        Math.abs(obj.posX - this.posX) < this.width + 50 ? result = true : result = false;
-        return result;
-    };
+        return Math.abs(obj.posX - this.posX) < this.width + 50 ? true : false;
+    }
 
-};
+}
 
 function filterObjs(checkedObj, objs) {
     let filteredObjs = objs.filter(obj => obj.line === checkedObj.line);

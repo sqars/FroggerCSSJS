@@ -19,7 +19,7 @@ const CollisionDetection = {
               (froggerTopSide < objBottomSide && froggerBottomSide > objTopSide)
         ) {
             result = true;
-        };
+        }
         return result;
     },
 
@@ -30,7 +30,7 @@ const CollisionDetection = {
                 result = objectsArr[i];
                 break;
             }
-        };
+        }
         return result;
     },
 
@@ -42,7 +42,7 @@ const CollisionDetection = {
               result = notDivingTurtles[i];
               break;
           }
-      };
+      }
       return result;
     },
 
@@ -54,6 +54,6 @@ const CollisionDetection = {
         }
         return result;
     }
-}
+};
 
 export default CollisionDetection;

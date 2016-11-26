@@ -24,11 +24,11 @@ export default class Frogger extends MovingObject {
         this.speed = 5;
         this.lives = 0;
         this.emitter = emitter;
-    };
+    }
 
     drawFrogger(ctx) {
         DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, 'green');
-    };
+    }
 
     triggerMove(event) {
         if (!this.moving) {
@@ -36,7 +36,7 @@ export default class Frogger extends MovingObject {
             this.setDirection(event);
             this.moving = true;
         }
-    };
+    }
 
     setDirection(event) {
         switch (event.which) {
@@ -53,15 +53,15 @@ export default class Frogger extends MovingObject {
                 this.direction = 'down';
                 break;
             default:
-                false;
+                break;
         }
-    };
+    }
 
     calculateFroggerPrevPos() {
         this.prevDirection = this.direction;
         this.prevPosX = this.posX;
         this.prevPosY = this.posY;
-    };
+    }
 
     revertFroggerPosition() {
         this.posX = this.prevPosX;
@@ -120,9 +120,9 @@ export default class Frogger extends MovingObject {
                     this.revertFroggerPosition();
                     break;
                 }
-            };
+            }
 
-        };
+        }
 
         if (checkIfCarArea(this)) { // check collision with cars only if frogger is in 'road' area
             if (findCollision(this, cars)) {
@@ -162,7 +162,7 @@ export default class Frogger extends MovingObject {
             // this.killFrogger();
         }
 
-    };
+    }
 
     move() {
         const {
@@ -192,18 +192,20 @@ export default class Frogger extends MovingObject {
                     break;
                 default:
                     break;
-            };
+            }
             this.movingCount++;
             if (this.movingCount >= 50 / this.speed) { // end of movement
-                this.direction == 'up' ? this.emitter.emit('updateScore', null) : false;
+                if (this.direction === 'up') {
+                    this.emitter.emit('updateScore', null);
+                }
                 this.movingCount = 0;
                 this.moving = false;
                 if (checkIfOutOfWaterArea(this)) { //check if frogger moves out of water(moves down turtle)
                     this.posX = 50 * Math.round(this.posX / 50); // fix frogger position when leaving turtle
                 }
-            };
-        };
-    };
+            }
+        }
+    }
 
     waitForEndMoving(frogger) {
         return new Promise(function(resolve, reject) {
@@ -211,11 +213,13 @@ export default class Frogger extends MovingObject {
                 resolve();
             }
         });
-    };
+    }
 
-    killFrogger(){
-      this.lives--;
-      this.lives < 0 ? this.emitter.emit('gameOver', null) : false;
+    killFrogger() {
+        this.lives--;
+        if (this.lives < 0) {
+            this.emitter.emit('gameOver', null);
+        }
     }
 
     resetFrogger() {
@@ -226,6 +230,6 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
         this.sailing = false;
         this.sailingObj = null;
-    };
+    }
 
 }

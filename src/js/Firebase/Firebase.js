@@ -13,5 +13,5 @@ try {
     console.log(error);
 }
 
-export const firebaseRef = firebase.database().ref();;
+export const firebaseRef = firebase.database().ref();
 export default firebase;

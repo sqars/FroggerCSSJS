@@ -54,6 +54,6 @@ const CheckArea = {
       }
       return result;
     }
-}
+};
 
 export default CheckArea;

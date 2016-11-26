@@ -1,16 +1,18 @@
 export default class EventEmitter {
     constructor() {
         this.events = {};
-    };
+    }
 
     subscribe(eventName, fn) {
-      !this.events[eventName] ? this.events[eventName] = [] : false;
+      if(!this.events[eventName]){
+        this.events[eventName] = [];
+      }
       this.events[eventName].push(fn);
 
       return () =>{
         this.events[eventName] = this.events[eventName].filter(eventFn => fn !== eventFn);
-      }
-    };
+      };
+    }
 
     emit(eventName, data){
       const event = this.events[eventName];
@@ -19,5 +21,5 @@ export default class EventEmitter {
           fn.call(null, data);
         });
       }
-    };
+    }
 }

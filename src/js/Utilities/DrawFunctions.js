@@ -18,6 +18,6 @@ const DrawFunctions = {
     ctx.fillStyle = color;
     ctx.fillText(text, posX, posY);
   }
-}
+};
 
 export default DrawFunctions;
