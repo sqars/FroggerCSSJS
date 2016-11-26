@@ -62,6 +62,9 @@ export default class EndScreen {
         body.find($('.end-screen')).remove();
         body.load('src/js/Components/EndScreen/PlayerScores.html', () => {
           const endScreen = body.find($('.end-screen'));
+          const playAgainBtn = $('<button>').text('Play Again').click(() =>{
+            location.reload();
+          });
           const max = this.playerScores.length > 6 ? 6 : this.playerScores.length;
           for(let i = 0; i < max; i++){
             let div = $('<div>').addClass('score');
@@ -69,6 +72,7 @@ export default class EndScreen {
             div.append($('<h3>').text('Score: ' + this.playerScores[i].score));
             endScreen.append(div);
           }
+          endScreen.append(playAgainBtn);
         });
     }
 }
