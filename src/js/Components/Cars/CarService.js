@@ -1,20 +1,26 @@
 import Car from './Car.js';
+import Utils from '../../Utilities/ObjectCreationUtils.js';
 
 const CarService = {
 
     createCars: (level) => {
-        let cars = [];
-        let placed = 0;
-        let line = 1
-        let attempts = 0;
+        const {
+            filterLine,
+            checkAvalable
+        } = Utils;
+
+        let posX,
+            filteredLine,
+            cars = [],
+            placed = 0,
+            line = 1,
+            attempts = 0,
+            overlaps = [];
         while (placed <= 15) {
-            let posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
-            let available = true;
-            let filteredLine = cars.filter(car => car.line === line);
-            filteredLine.forEach((checkedCar) => {
-                Math.abs(checkedCar.posX - posX) < checkedCar.width + 50 ? available = false : false;
-            });
-            if (available) {
+            posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
+            filteredLine = cars.filter(filterLine.bind(null, line));
+            overlaps = filteredLine.filter(checkAvalable.bind(null, posX));
+            if (overlaps.length === 0) {
                 let car = new Car(posX, line, level);
                 cars.push(car);
                 placed++;
@@ -28,10 +34,10 @@ const CarService = {
                 placed++;
             }
 
-            if (placed % 3 == 0) {
+            if (placed % 3 === 0) {
                 line++;
             }
-        };
+        }
         return cars;
     },
 
@@ -39,19 +45,14 @@ const CarService = {
         switch (line) {
             case 1:
                 return 550;
-                break;
             case 2:
                 return 500;
-                break
             case 3:
                 return 450;
-                break;
             case 4:
                 return 400;
-                break;
             case 5:
                 return 350;
-                break;
             default:
                 break;
         }
@@ -61,10 +62,8 @@ const CarService = {
         switch (line) {
             case 5:
                 return 150;
-                break;
             default:
                 return 50;
-                break;
         }
     },
 
@@ -72,23 +71,18 @@ const CarService = {
         switch (line) {
             case 1:
                 return 'right';
-                break;
             case 2:
                 return 'left';
-                break
             case 3:
                 return 'right';
-                break;
             case 4:
                 return 'left';
-                break;
             case 5:
                 return 'right';
-                break;
             default:
                 break;
         }
     }
-}
+};
 
 export default CarService;

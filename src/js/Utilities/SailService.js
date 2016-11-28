@@ -8,6 +8,6 @@ const SailService = {
             frogger.posX = obj.posX;
         }
     }
-}
+};
 
 export default SailService;
