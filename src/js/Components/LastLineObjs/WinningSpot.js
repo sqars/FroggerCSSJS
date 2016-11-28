@@ -7,13 +7,11 @@ export default class WinningSpot{
     this.width = 72.22;
     this.height = 50;
     this.taken = false;
-  };
+  }
 
   drawSpot(ctx){
-    let color = '#9ddfe1';
-    if(this.taken){
-      color = 'green';
-    }
+    let color = this.taken ? 'green' : '#9ddfe1';
     DrawFunctions.drawRect(ctx, this.posX, this.posY, this.width, this.height, color);
-  };
-};
+  }
+
+}

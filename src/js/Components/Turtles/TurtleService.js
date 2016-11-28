@@ -1,26 +1,28 @@
 import Turtle from './Turtle.js';
+import Utils from '../../Utilities/ObjectCreationUtils.js';
 
 const TurtleService = {
 
     createTurtles: (level) => {
-        let turtles = [];
-        let placed = 0;
-        let line = 1;
-        let attempts = 0;
-        let diving = false;
+        const {
+            filterLine,
+            checkAvalable
+        } = Utils;
+
+        let posX,
+            filteredLine,
+            turtles = [],
+            placed = 0,
+            line = 1,
+            attempts = 0,
+            diving = false,
+            overlaps = [];
         while (placed <= 7) {
-            if (placed == 2 || placed == 6) {
-                diving = true;
-            } else {
-                diving = false;
-            }
-            let posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
-            let available = true;
-            let filteredLine = turtles.filter(turtle => turtle.line === line);
-            filteredLine.forEach((checkedTurtle) => {
-                Math.abs(checkedTurtle.posX - posX) < checkedTurtle.width + 50 ? available = false : false;
-            });
-            if (available) {
+            diving = (placed === 2 || placed === 6) ? true : false;
+            posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
+            filteredLine = turtles.filter(filterLine.bind(null, line));
+            overlaps = filteredLine.filter(checkAvalable.bind(null, posX));
+            if (overlaps.length === 0) {
                 let turtle = new Turtle(posX, line, diving, level);
                 turtles.push(turtle);
                 placed++;
@@ -46,10 +48,8 @@ const TurtleService = {
         switch (line) {
             case 1:
                 return 150;
-                break;
             case 2:
                 return 250;
-                break
             default:
                 break;
         }
@@ -59,13 +59,11 @@ const TurtleService = {
         switch (line) {
             case 1:
                 return 100;
-                break;
             default:
                 return 150;
-                break;
         }
     }
 
-}
+};
 
 export default TurtleService;

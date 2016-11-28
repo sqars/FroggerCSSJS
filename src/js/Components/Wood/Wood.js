@@ -8,7 +8,7 @@ export default class Wood extends MovingObject {
         super(posX);
         this.line = line;
         this.height = 50;
-        this.width = WoodService.generateWidth(line)
+        this.width = WoodService.generateWidth(line);
         this.posY = WoodService.generateYPos(line);
         this.speed = Generators.generateSpeed(this.width, level);
         this.direction = 'right';
