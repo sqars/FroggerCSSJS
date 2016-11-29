@@ -17,7 +17,7 @@ export default class Board {
         this.gameScore = 0;
         this.levelTimeout = 100;
         this.board = document.getElementById('canvas');
-        this.context = this.board.getContext("2d");
+        this.context = this.board.getContext('2d');
         this.infoBar = new InfoBar();
         this.endScreen = new EndScreen();
         this.water = new Water();
@@ -97,12 +97,12 @@ export default class Board {
     }
 
     gameOver(){
-      unsubscribeAll(this.emitter);
+      unsubscribe(this.emitter);
       this.endScreen.showGameOverScreen(this.gameScore);
     }
 }
 
-function unsubscribeAll(emitter){
+function unsubscribe(emitter){
   let unsubscribeAll = [
     emitter.subscribe('levelComplete', null),
     emitter.subscribe('updateScore', null),

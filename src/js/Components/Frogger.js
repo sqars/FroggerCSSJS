@@ -2,7 +2,6 @@ import MovingObject from './MovingObject.js';
 import DrawFunctions from '../Utilities/DrawFunctions.js';
 
 import CheckArea from '../Utilities/CheckArea.js';
-import EventEmitter from '../Utilities/EventEmitter.js';
 import CollisionDetection from '../Utilities/CollisionDetection.js';
 import SailService from '../Utilities/SailService.js';
 
@@ -71,7 +70,7 @@ export default class Frogger extends MovingObject {
         this.movingCount = 0;
     }
 
-    handleCollisions(board, grass, cars, turtles, woods, winningSpots, context) {
+    handleCollisions(board, grass, cars, turtles, woods, winningSpots) {
         const {
             checkIfOutOfMapArea,
             checkIfLastLineArea,
@@ -79,7 +78,6 @@ export default class Frogger extends MovingObject {
             checkIfTurtleArea,
             checkIfWoodArea,
             checkIfWaterArea,
-            checkIfOutOfWaterArea
         } = CheckArea;
 
         const {
@@ -157,7 +155,8 @@ export default class Frogger extends MovingObject {
             }
         }
 
-        if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { // check if frogger is in water
+        if (checkIfWaterArea(this) && !(findTurtleCollision(this, turtles) || findCollision(this, woods))) { 
+            // check if frogger is in water
             // this.resetFrogger();
             // this.killFrogger();
         }
@@ -205,14 +204,6 @@ export default class Frogger extends MovingObject {
                 }
             }
         }
-    }
-
-    waitForEndMoving(frogger) {
-        return new Promise(function(resolve, reject) {
-            if (!frogger.moving) {
-                resolve();
-            }
-        });
     }
 
     killFrogger() {

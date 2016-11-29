@@ -8,13 +8,13 @@ const DrawFunctions = {
   },
 
   colorText: (ctx, showWords, textX, textY, color) => {
-    ctx.font = "10px Arial";
+    ctx.font = '10px Arial';
     ctx.fillStyle = color;
     ctx.fillText(showWords, textX, textY);
   },
 
   drawText: (ctx, fontFamily, fontSize, color, text, posX, posY) =>{
-    ctx.font = fontSize + "px " + fontFamily;
+    ctx.font = fontSize + 'px ' + fontFamily;
     ctx.fillStyle = color;
     ctx.fillText(text, posX, posY);
   }

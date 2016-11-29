@@ -70,7 +70,7 @@ gulp.task('buildCss', function () {
 
 gulp.task('default', function() {
     gulp.watch('src/js/**/*.js', ['browserify']);
-    gulp.watch('src/js/**/*.js', ['lint']);
+//    gulp.watch('src/js/**/*.js', ['lint']);
     gulp.watch('src/scss/**/*.scss', ['sass']);
 });
 

@@ -11,11 +11,10 @@ const WoodService = {
 
         let posX,
             filteredLine,
-            turtles = [],
-            placed = 0,
+            woods = [],
+            placed = 0, 
             line = 1,
             attempts = 0,
-            diving = false,
             overlaps = [];
         while (placed <= 7) {
             posX = (Math.floor(Math.random() * (1 + 14 - 1)) + 1) * 50;
@@ -36,9 +35,9 @@ const WoodService = {
                 placed++;
             }
 
-            if (placed == 3) {
+            if (placed === 3) {
                 line = 2;
-            } else if (placed == 5) {
+            } else if (placed === 5) {
                 line = 3;
             }
 

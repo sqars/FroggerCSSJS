@@ -1,27 +1,14 @@
-import DrawFunctions from '../../Utilities/DrawFunctions.js';
 import $ from 'jquery';
 import {
     firebaseRef
-} from '../../Firebase/Firebase.js';
-
+}
+from '../../Firebase/Firebase.js';
 export default class EndScreen {
+
     constructor() {
-        this.validName = true;
         this.gameScore = null;
         this.playerScores = [];
-    }
-
-    sendClickHandler() {
-        const playerName = $('input').val();
-        this.validName = playerName.length > 3 ? true : false;
-        if (this.validName) {
-            let save = this.saveScore(playerName);
-            let fetch = this.fetchPlayersScores();
-            Promise.all([save, fetch]).then((responses) => {
-                this.savePlayerScores(responses[1].val());
-                this.showPlayerScoresScreen();
-            });
-        }
+        this.body = $('body');
     }
 
     saveScore(playerName) {
@@ -36,50 +23,80 @@ export default class EndScreen {
         return firebaseRef.child('players').once('value');
     }
 
-    savePlayerScores(data) {
+    updatePlayerScores(data) {
         this.playerScores = [];
         for (let key in data) {
             this.playerScores.push(data[key]);
         }
-        this.playerScores.sort((a, b) => {
-            return -a.score + b.score;
-        });
+    }
+
+    sendClickHandler() {
+        const playerName = $('input').val();
+        if (this.validateName(playerName)) {
+            let save = this.saveScore(playerName);
+            let fetch = this.fetchPlayersScores();
+            Promise.all([save, fetch]).then((responses) => {
+                this.updatePlayerScores(responses[1].val());
+                this.sortPlayerScores();
+                this.showPlayerScoresScreen();
+            });
+        } else {
+            this.showValidateError();
+        }
     }
 
     showGameOverScreen(gameScore) {
         this.gameScore = gameScore;
-        const body = $('body');
         $(document).off('keydown');
-        body.find($('#canvas')).remove();
         this.fetchPlayersScores().then((response) => {
-            this.savePlayerScores(response.val());
+            this.updatePlayerScores(response.val());
+            this.sortPlayerScores();
             if (gameScore >= this.playerScores[5].score) {
-                body.load('src/js/Components/EndScreen/EndScreen.html', () => {
-                    body.find($('#score')).text(gameScore);
-                    body.find($('button')).click(this.sendClickHandler.bind(this));
-                });
+                this.showEndInputScreen();
             } else {
                 this.showPlayerScoresScreen();
             }
         });
     }
 
-    showPlayerScoresScreen() {
-        const body = $('body');
-        body.find($('.end-screen')).remove();
-        body.load('src/js/Components/EndScreen/PlayerScores.html', () => {
-            const endScreen = body.find($('.end-screen'));
-            const playAgainBtn = $('<button>').text('Play Again').click(() => {
-                location.reload();
-            });
-            const max = this.playerScores.length > 6 ? 6 : this.playerScores.length;
-            for (let i = 0; i < max; i++) {
-                let div = $('<div>').addClass('score');
-                div.append($('<h3>').text('Name: ' + this.playerScores[i].name));
-                div.append($('<h3>').text('Score: ' + this.playerScores[i].score));
-                endScreen.append(div);
-            }
-            endScreen.append(playAgainBtn);
+    showEndInputScreen() {
+        this.body.find($('#canvas')).remove();
+        this.body.load('src/js/Components/EndScreen/EndScreen.html', () => {
+            this.body.find($('#score')).text(this.gameScore);
+            this.body.find($('button')).click(this.sendClickHandler.bind(this));
         });
+    }
+
+    showPlayerScoresScreen() {
+        this.body.find($('.end-screen')).remove();
+        this.body.load('src/js/Components/EndScreen/PlayerScores.html', () => {
+            this.createScoreView();
+            this.body.find($('button')).click(() => location.reload());
+        });
+    }
+
+    createScoreView() {
+        const scores = this.body.find($('div#scores'));
+        const max = this.playerScores.length > 6 ? 6 : this.playerScores.length;
+        for (let i = 0; i < max; i++) {
+            let div = $('<div>').addClass('score');
+            div.append($('<h3>').text('Name: ' + this.playerScores[i].name));
+            div.append($('<h3>').text('Score: ' + this.playerScores[i].score));
+            scores.append(div);
+        }
+    }
+
+    showValidateError() {
+        this.body.find('.valid-name-error').error.show();
+    }
+
+    sortPlayerScores() {
+        this.playerScores.sort((a, b) => {
+            return -a.score + b.score;
+        });
+    }
+
+    validateName(name) {
+        return name.length > 3 ? true : false;
     }
 }

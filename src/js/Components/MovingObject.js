@@ -7,8 +7,8 @@ export default class MovingObject {
     }
 
     move(objects) {
-        let max;
-        let min;
+        let max, 
+            min;
         switch (this.direction) {
             case 'left':
                 if (this.posX < -150) {
